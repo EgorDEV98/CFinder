@@ -41,7 +41,7 @@ public class DecryptorSettings
         => new DecryptorSettings()
         {
             Id = 0,
-            ThreadCount = 0,
+            ThreadCount = 100,
             DepthGenerate = 3,
             TryDecrypt = true,
             DecryptSaveAs = DecryptSaveAs.SaveAlways
