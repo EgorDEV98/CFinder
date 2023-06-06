@@ -3,53 +3,53 @@
 namespace CFinder.Domain.WorkHistory;
 
 /// <summary>
-/// Таблица истории запусков
+/// Service history
 /// </summary>
 public class WorkHistory
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
     public int Id { get; set; }
     
     /// <summary>
-    /// Название операции
+    /// Operation name
     /// </summary>
     public string? Name { get; set; }
 
     /// <summary>
-    /// Директория
+    /// Operation directory
     /// </summary>
     public string? Path { get; set; }
     
     /// <summary>
-    /// Начало работы операции
+    /// Operation start date and time 
     /// </summary>
-    public DateTime StartDate { get; set; } = DateTime.Now;
+    public DateTime StartDate { get; set; }
     
     /// <summary>
-    /// Окончание работы операции
+    /// Operation end date and time 
     /// </summary>
     public DateTime? EndDate { get; set; }
 
     /// <summary>
-    /// Всего иттераций
+    /// Total itteration
     /// </summary>
     public long Total { get; set; }
     
     /// <summary>
-    /// Текущая иттерация
+    /// Current itteration
     /// </summary>
     public long Current { get; set; }
     
     /// <summary>
-    /// Статус работы операции
+    /// Work status
     /// </summary>
-    public Status Status { get; set; } = Status.AtWork;
+    public Status Status { get; set; }
 }
 
 /// <summary>
-/// Статус работы
+/// Work status
 /// </summary>
 public enum Status : byte
 {

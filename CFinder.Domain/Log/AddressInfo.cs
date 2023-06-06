@@ -1,24 +1,29 @@
 ﻿namespace CFinder.Domain.Log;
 
-public class AddressInfo
+public sealed class AddressInfo
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; init; }
     
     /// <summary>
-    /// Адрес криптовалюты
+    /// Main address
     /// </summary>
-    public string? Address { get; set; }
+    public string? Address { get; init; }
     
     /// <summary>
-    /// Коллекция токенов принадлежащих адресу
+    /// Number Of Address
     /// </summary>
-    public virtual ICollection<Token> Tokens { get; set; }
+    public int? NumberOfAddress { get; init; }
     
     /// <summary>
-    /// Коллекция НФТ принадлежащих адресу
+    /// Collection of tokens belonging to the address
     /// </summary>
-    public virtual ICollection<NFT> Nfts { get; set; }
+    public ICollection<Token>? Tokens { get; init; }
+    
+    /// <summary>
+    /// Collection of NMTs belonging to the address
+    /// </summary>
+    public ICollection<NFT>? Nfts { get; init; }
 }

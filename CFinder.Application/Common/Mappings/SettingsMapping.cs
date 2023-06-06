@@ -23,7 +23,6 @@ public static class SettingsMapping
                 DecryptSaveAs = settings.DecryptorSettings.DecryptSaveAs,
                 DepthGenerate = settings.DecryptorSettings.DepthGenerate,
                 EncryptedParsingType = settings.DecryptorSettings.EncryptedParsingType,
-                ThreadCount = settings.DecryptorSettings.ThreadCount,
                 TryDecrypt = settings.DecryptorSettings.TryDecrypt,
                 CycleItterationCount = settings.DecryptorSettings.CycleItterationCount
             },
@@ -61,7 +60,6 @@ public static class SettingsMapping
                 DecryptSaveAs = settings.DecryptorSettings.DecryptSaveAs,
                 DepthGenerate = settings.DecryptorSettings.DepthGenerate,
                 EncryptedParsingType = settings.DecryptorSettings.EncryptedParsingType,
-                ThreadCount = settings.DecryptorSettings.ThreadCount,
                 TryDecrypt = settings.DecryptorSettings.TryDecrypt,
                 CycleItterationCount = settings.DecryptorSettings.CycleItterationCount
             },
@@ -97,7 +95,6 @@ public static class SettingsMapping
                 DecryptSaveAs = settings.DecryptorSettings.DecryptSaveAs,
                 DepthGenerate = settings.DecryptorSettings.DepthGenerate,
                 WalletParsingType = settings.DecryptorSettings.EncryptedParsingType,
-                ThreadCount = settings.DecryptorSettings.ThreadCount,
                 TryDecrypt = settings.DecryptorSettings.TryDecrypt,
                 CycleItterationCount = settings.DecryptorSettings.CycleItterationCount
             },

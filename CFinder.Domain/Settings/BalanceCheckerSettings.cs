@@ -3,32 +3,32 @@
 namespace CFinder.Domain.Settings;
 
 /// <summary>
-/// Настройки чекера
+/// Balance crypto checker settings
 /// </summary>
 public class BalanceCheckerSettings
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
     public int Id { get; set; }
     
     /// <summary>
-    /// Режим проверки баланса
+    /// Check crypto mode
     /// </summary>
     public CheckCryptoMode CheckCrypto { get; set; }
     
     /// <summary>
-    /// Только авторизованные CoinGeco токены
+    /// Only CoinGeco Tokens
     /// </summary>
     public bool OnlyWhiteList { get; set; }
     
     /// <summary>
-    /// Задержка перед запросом
+    /// Delay before request
     /// </summary>
     public short DelayBeforeRequest { get; set; }
 
     /// <summary>
-    /// Получить стандартные настройки
+    /// GetDefault settings
     /// </summary>
     public static BalanceCheckerSettings GetDefault()
         => new BalanceCheckerSettings()
@@ -42,7 +42,7 @@ public class BalanceCheckerSettings
 
 
 /// <summary>
-/// Режим проверки баланса
+/// Crypto checker mode
 /// </summary>
 public enum CheckCryptoMode : byte
 {

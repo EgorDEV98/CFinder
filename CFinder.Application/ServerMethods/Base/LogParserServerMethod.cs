@@ -1,7 +1,7 @@
-﻿using System.Text.RegularExpressions;
-using CFinder.Application.Models.CryptoFinderModels;
+﻿using CFinder.Application.Models.CryptoFinderModels;
 using CFinder.Application.Models.Result;
 using CFinder.Domain.Log;
+using CFinder.Domain.Settings;
 
 namespace CFinder.Application.ServerMethods.Base;
 
@@ -13,7 +13,7 @@ public class LogParserServerMethod
     /// </summary>
     /// <param name="directory">Папка с логом</param>
     /// <returns>List AuthenticationDto</returns>
-    public virtual async Task<List<AuthenticationDto>> GetAuthentication(string directory)
+    public virtual async Task<List<AuthenticationDto>> GetAuthentication(string directory, AuthParsingType parsingType = AuthParsingType.FullParsing)
     {
         await Task.CompletedTask;
 
@@ -28,7 +28,7 @@ public class LogParserServerMethod
         if (passwordFile == null)
             return authList;
 
-        return await ParsePasswordFile(passwordFile);
+        return await ParsePasswordFile(passwordFile, parsingType);
     }
     
     /// <summary>
@@ -80,7 +80,7 @@ public class LogParserServerMethod
     /// </summary>
     /// <param name="passwordFile"></param>
     /// <returns></returns>
-    private async Task<List<AuthenticationDto>> ParsePasswordFile(string passwordFile)
+    private async Task<List<AuthenticationDto>> ParsePasswordFile(string passwordFile, AuthParsingType parsingType)
     {
         var authsList = new List<AuthenticationDto>();
 
@@ -109,19 +109,22 @@ public class LogParserServerMethod
                     {
                         auth.Password = endString;
                     }
-                    else if (startString.Contains("url", StringComparison.OrdinalIgnoreCase) ||
+                    else if ((startString.Contains("url", StringComparison.OrdinalIgnoreCase) ||
                              startString.Contains("link", StringComparison.OrdinalIgnoreCase) ||
-                             startString.Contains("host", StringComparison.OrdinalIgnoreCase))
+                             startString.Contains("host", StringComparison.OrdinalIgnoreCase)) &&
+                             parsingType == AuthParsingType.FullParsing)
                     {
                         auth.Url = endString;
                     }
-                    else if (startString.Contains("user", StringComparison.OrdinalIgnoreCase) ||
-                             startString.Contains("login", StringComparison.OrdinalIgnoreCase))
+                    else if ((startString.Contains("user", StringComparison.OrdinalIgnoreCase) ||
+                             startString.Contains("login", StringComparison.OrdinalIgnoreCase)) &&
+                             (parsingType == AuthParsingType.FullParsing || parsingType == AuthParsingType.LoginAndPassword))
                     {
                         auth.Login = endString;
                     }
-                    else if (startString.Contains("app", StringComparison.OrdinalIgnoreCase) ||
-                             startString.Contains("soft", StringComparison.OrdinalIgnoreCase))
+                    else if ((startString.Contains("app", StringComparison.OrdinalIgnoreCase) ||
+                             startString.Contains("soft", StringComparison.OrdinalIgnoreCase)) &&
+                            parsingType == AuthParsingType.FullParsing)
                     {
                         auth.Application = endString;
                     }

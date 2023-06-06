@@ -1,13 +1,15 @@
 ﻿namespace CFinder.Domain.LogsCleaner;
 
+#nullable disable
 public class CleanerPattern
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
     public int Id { get; set; }
+    
     /// <summary>
-    /// Формат файла
+    /// File format ( .exe | .bin | etc...)
     /// </summary>
-    public string Format { get; set; } = null!;
+    public string Format { get; set; } 
 }

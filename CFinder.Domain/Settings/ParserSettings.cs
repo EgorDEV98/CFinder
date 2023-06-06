@@ -3,40 +3,39 @@
 namespace CFinder.Domain.Settings;
 
 /// <summary>
-/// Настройки парсера директории с логом
+/// Parser authentical settings
 /// </summary>
 public class ParserSettings
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
-    [Required]
-    public int Id { get; set; }
+    public int Id { get; init; }
     
     /// <summary>
-    /// Тип сохрания паролей
+    /// Save password type
     /// </summary>
-    public AuthSaveAs SaveAs { get; set; }
+    public AuthSaveAs SaveAs { get; init; }
     
     /// <summary>
-    /// Тип парсинга
+    /// Parsing authentical data type
     /// </summary>
-    public AuthParsingType ParsingType { get; set; }
+    public AuthParsingType ParsingType { get; init; }
 
     /// <summary>
-    /// Получить стандартные настройки
+    /// Get default settings
     /// </summary>
     public static ParserSettings GetDefault()
         => new ParserSettings()
         {
             Id = 0,
-            ParsingType = AuthParsingType.FullParsing,
-            SaveAs = AuthSaveAs.NoSave,
+            ParsingType = AuthParsingType.OnlyPassword,
+            SaveAs = AuthSaveAs.SaveInFile,
         };
 }
 
 /// <summary>
-/// Режим сохранения паролей
+/// Save password mode
 /// </summary>
 public enum AuthSaveAs : byte
 {
@@ -46,7 +45,7 @@ public enum AuthSaveAs : byte
 }
 
 /// <summary>
-/// Тип парсинга
+/// Parsing of authentication data mode
 /// </summary>
 public enum AuthParsingType : byte
 {

@@ -3,27 +3,27 @@
 public class Authentication
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
     public int Id { get; set; }
     
     /// <summary>
-    /// Приложение с которого сняты данные
+    /// The application from which the data was taken
     /// </summary>
     public string? Applcation { get; set; }
     
     /// <summary>
-    /// Ссылка
+    /// Link
     /// </summary>
     public string? Link { get; set; }
     
     /// <summary>
-    /// Логин
+    /// Account login 
     /// </summary>
     public string? Login { get; set; }
     
     /// <summary>
-    /// Пароль
+    /// Account password
     /// </summary>
     public string? Password { get; set; }
 }

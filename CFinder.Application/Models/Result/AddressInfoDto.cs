@@ -10,15 +10,15 @@ public class AddressInfoDto
     /// <summary>
     /// Адрес криптовалюты
     /// </summary>
-    public string Address { get; set; } = null!;
+    public string Address { get; set; } 
 
     /// <summary>
     /// Коллекция токенов принадлежащих адресу
     /// </summary>
-    public virtual List<TokenDto> Tokens { get; set; } = new();
+    public virtual ICollection<TokenDto>? Tokens { get; set; }
     
     /// <summary>
     /// Коллекция НФТ принадлежащих адресу
     /// </summary>
-    public virtual List<NFTDto> Nfts { get; set; } = new();
+    public virtual ICollection<NFTDto>? Nfts { get; set; }
 }

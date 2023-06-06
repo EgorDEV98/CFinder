@@ -3,40 +3,44 @@
 public class Settings
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
     public int Id { get; set; }
 
     /// <summary>
-    /// Имя профиля
+    /// Profile name
     /// </summary>
-    public string Name { get; set; } = null!;
+    public string Name { get; set; } 
+        = "NONAME";
     
     /// <summary>
-    /// Активность профиля
+    /// Profile activity
     /// </summary>
     public bool IsActive { get; set; }
 
     /// <summary>
-    /// Настройки парсера
+    /// Parser settings
     /// </summary>
-    public ParserSettings ParserSettings { get; set; } = null!;
+    public ParserSettings ParserSettings { get; set; } 
+        = ParserSettings.GetDefault();
 
     /// <summary>
-    /// Настройки декриптовщика
+    /// Decryptor settings
     /// </summary>
-    public DecryptorSettings DecryptorSettings { get; set; } = null!;
+    public DecryptorSettings DecryptorSettings { get; set; } 
+        = DecryptorSettings.GetDefault();
 
     /// <summary>
-    /// Настройки проверки баланса
+    /// Balance checker settings
     /// </summary>
-    public BalanceCheckerSettings BalanceCheckerSettings { get; set; } = null!;
+    public BalanceCheckerSettings BalanceCheckerSettings { get; set; }
+        = BalanceCheckerSettings.GetDefault();
     
     /// <summary>
-    /// Получить стандартные настройки
+    /// Get default settings
     /// </summary>
     public static Settings GetDefault()
-        => new Settings()
+        => new()
         {
             Id = 0,
             IsActive = true,

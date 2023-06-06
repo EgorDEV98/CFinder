@@ -13,12 +13,7 @@ public class DecryptorSettingsDto
     /// Декриптовать
     /// </summary>
     public bool TryDecrypt { get; set; }
-    
-    /// <summary>
-    /// Кол-во потоков
-    /// </summary>
-    public byte ThreadCount { get; set; }
-    
+
     /// <summary>
     /// Глубина генерации
     /// </summary>

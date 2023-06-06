@@ -46,9 +46,6 @@ internal class UpdateSettingsCommandValidation : AbstractValidator<UpdateSetting
                 .GreaterThanOrEqualTo(1).WithMessage("Depth must be greater than or equal to 1");
             RuleFor(x => x.TryDecrypt)
                 .NotNull().WithMessage("Available option \"Try Decrypt\" true or false");
-            RuleFor(x => (int)x.ThreadCount)
-                .NotNull()
-                .GreaterThan(1).WithMessage("Min Thread 1");
             RuleFor(x => x.DecryptSaveAs)
                 .NotNull().WithMessage("Decrypt save type can not be null");
             RuleFor(x => x.EncryptedParsingType)

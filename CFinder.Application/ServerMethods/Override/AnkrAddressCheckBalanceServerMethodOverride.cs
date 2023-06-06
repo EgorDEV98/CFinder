@@ -50,7 +50,7 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
         
         using (var client = new HttpClient())
         {
-            var response = await client.PostAsync(ENDPOINT, stringContent);
+            var response = await client.PostAsync(ENDPOINT + AUTH_KEY, stringContent);
             if (response.IsSuccessStatusCode)
             {
                 var stringContentResponse = await response.Content.ReadAsStringAsync();

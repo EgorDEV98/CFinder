@@ -36,7 +36,6 @@ internal class UpdateSettingsCommandHandler : IRequestHandler<UpdateSettingsComm
         {
             Id = request.DecryptorSettings.Id,
             DepthGenerate = request.DecryptorSettings.DepthGenerate,
-            ThreadCount = request.DecryptorSettings.ThreadCount,
             TryDecrypt = request.DecryptorSettings.TryDecrypt,
             DecryptSaveAs = request.DecryptorSettings.DecryptSaveAs,
             EncryptedParsingType = request.DecryptorSettings.EncryptedParsingType,

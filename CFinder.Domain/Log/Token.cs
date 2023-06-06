@@ -1,61 +1,49 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CFinder.Domain.Log;
+﻿namespace CFinder.Domain.Log;
 
 public class Token
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; init; }
     
     /// <summary>
-    /// Имя блокчейн сети
+    /// Blockchain node
     /// </summary>
-    public string? Blockchain { get; set; }
+    public string? Blockchain { get; init; }
     
     /// <summary>
-    /// Имя токена
+    /// Token name
     /// </summary>
-    public string? TokenName { get; set; }
+    public string? TokenName { get; init; }
     
     /// <summary>
-    /// Символ токена
+    /// Symbol token
     /// </summary>
-    public string? TokenSymbol { get; set; }
+    public string? TokenSymbol { get; init; }
     
     /// <summary>
-    /// Тип токена
+    /// Token type
     /// </summary>
-    public string? Type { get; set; }
+    public string? Type { get; init; }
 
     /// <summary>
-    /// Баланс токена
+    /// Balance
     /// </summary>
-    public string? Balance { get; set; }
+    public string? Balance { get; init; }
     
     /// <summary>
-    /// Баланс токена в долларах
+    /// Token balance in USD
     /// </summary>
-    public string? BalanceUsd { get; set; }
+    public string? BalanceUsd { get; init; }
     
     /// <summary>
-    /// Стоимость токена
+    /// The cost of the token
     /// </summary>
-    public string? TokenPrice { get; set; }
+    public string? TokenPrice { get; init; }
     
     /// <summary>
-    /// Изображение связанное с токеном
+    /// Token image
     /// </summary>
-    public string? Thumbnail { get; set; }
-    
-    /// <summary>
-    /// Навигационное поле
-    /// </summary>
-    public AddressInfo AddressInfo { get; set; }
-    
-    /// <summary>
-    /// Внешний ключ
-    /// </summary>
-    public int AddressInfoId { get; set; }
+    public string? Thumbnail { get; init; }
 }

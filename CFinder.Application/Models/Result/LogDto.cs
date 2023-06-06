@@ -10,7 +10,7 @@ public class LogDto
     /// <summary>
     /// Папка с логом/файлом
     /// </summary>
-    public string Directory { get; set; } = null!;
+    public string Directory { get; set; } 
     
     /// <summary>
     /// Все файлы лога
@@ -21,9 +21,9 @@ public class LogDto
     /// Коллекция авторизационных данных
     /// </summary>
     public virtual ICollection<AuthenticationDto>? Authentications { get; set; }
-    
+
     /// <summary>
     /// Кошельки
     /// </summary>
-    public virtual ICollection<WalletDto>? Wallets { get; set; } 
+    public virtual ICollection<WalletDto>? Wallets { get; set; }
 }

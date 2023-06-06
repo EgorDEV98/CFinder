@@ -7,7 +7,7 @@ public class WalletDto
     /// <summary>
     /// Идентификатор
     /// </summary>
-    public string? Id { get; set; }
+    public int Id { get; set; }
     
     /// <summary>
     /// Папка с кошельком
@@ -52,7 +52,7 @@ public class WalletDto
     /// <summary>
     /// Адреса
     /// </summary>
-    public virtual List<AddressInfoDto> Addresses { get; set; } = new();
+    public virtual ICollection<AddressInfoDto>? Addresses { get; set; }
 
     
 }

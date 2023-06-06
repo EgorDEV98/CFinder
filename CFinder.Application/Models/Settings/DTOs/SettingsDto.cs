@@ -10,7 +10,7 @@ public class SettingsDto
     /// <summary>
     /// Имя профиля
     /// </summary>
-    public string Name { get; set; } = null!;
+    public string Name { get; set; }
     
     /// <summary>
     /// Активность профиля
@@ -20,15 +20,15 @@ public class SettingsDto
     /// <summary>
     /// Настройки парсера
     /// </summary>
-    public ParserSettingsDto ParserSettings { get; set; } = null!;
+    public ParserSettingsDto ParserSettings { get; set; }
 
     /// <summary>
     /// Настройки декриптовщика
     /// </summary>
-    public DecryptorSettingsDto DecryptorSettings { get; set; } = null!;
+    public DecryptorSettingsDto DecryptorSettings { get; set; }
 
     /// <summary>
     /// Настройки проверки баланса
     /// </summary>
-    public BalanceCheckerSettingsDto BalanceCheckerSettings { get; set; } = null!;
+    public BalanceCheckerSettingsDto BalanceCheckerSettings { get; set; }
 }

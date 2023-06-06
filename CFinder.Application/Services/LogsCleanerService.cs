@@ -90,7 +90,7 @@ public class LogsCleanerService : BaseService
         }
         catch
         {
-            var updateCommand = new UpdateWorkHistoryCommand()
+            UpdateWorkHistoryCommand = new UpdateWorkHistoryCommand()
             {
                 Id = WorkHistoryDto.Id,
                 Current = WorkHistoryDto.Current,
@@ -98,7 +98,7 @@ public class LogsCleanerService : BaseService
                 Status = Status.Error,
                 EndDate = DateTime.Now
             };
-            await Mediator.Send(updateCommand);
+            await Mediator.Send(UpdateWorkHistoryCommand);
         }
         
     }

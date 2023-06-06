@@ -5,48 +5,42 @@ namespace CFinder.Domain.Settings;
 public class DecryptorSettings
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
     public int Id { get; set; }
     
     /// <summary>
-    /// Декриптовать
+    /// Try decrypt
     /// </summary>
     public bool TryDecrypt { get; set; }
-    
+
     /// <summary>
-    /// Кол-во потоков
-    /// </summary>
-    public byte ThreadCount { get; set; }
-    
-    /// <summary>
-    /// Глубина генерации
+    /// Depth generate (address path)
     /// </summary>
     public byte DepthGenerate { get; set; }
     
     /// <summary>
-    /// Режим сохранения результатов
+    /// Save result mode
     /// </summary>
     public DecryptSaveAs DecryptSaveAs { get; set; }
     
     /// <summary>
-    /// Режим парсинга зашифрованного сообщения
+    /// Parsing encrypted mode
     /// </summary>
     public EncryptedParsingType EncryptedParsingType { get; set; }
     
     /// <summary>
-    /// Кол-во иттераций в поиске циклом
+    /// Max circle itteration
     /// </summary>
     public int CycleItterationCount { get; set; }
 
     /// <summary>
-    /// Получить стандартные настройки
+    /// Get default settings
     /// </summary>
     public static DecryptorSettings GetDefault() 
         => new DecryptorSettings()
         {
             Id = 0,
-            ThreadCount = 100,
             DepthGenerate = 3,
             TryDecrypt = true,
             DecryptSaveAs = DecryptSaveAs.SaveAlways,
@@ -56,7 +50,7 @@ public class DecryptorSettings
 }
 
 /// <summary>
-/// Режим сохранения результатов декриптовки
+/// Save result mode
 /// </summary>
 public enum DecryptSaveAs : byte
 {
@@ -65,7 +59,7 @@ public enum DecryptSaveAs : byte
 }
 
 /// <summary>
-/// Режим поиска кошельков
+/// Search encrypt mode
 /// </summary>
 public enum EncryptedParsingType : byte
 {

@@ -11,5 +11,5 @@ public class CreateSettingsCommand : IRequest<SettingsDto>
     /// <summary>
     /// Имя профиля
     /// </summary>
-    public string Name { get; set; } = null!;
+    public string Name { get; set; } 
 }

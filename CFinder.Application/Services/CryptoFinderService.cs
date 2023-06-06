@@ -2,11 +2,14 @@
 using CFinder.Application.Models.Result;
 using CFinder.Application.Models.Settings;
 using CFinder.Application.Models.WorkHistory.DTOs;
+using CFinder.Application.Repository.ResultRepository.Commands.CreateResult;
 using CFinder.Application.Repository.SettingsRepository.Queries.GetActiveSettings;
 using CFinder.Application.Repository.WorkHistoryRepository.Commands.CreateWorkHistory;
+using CFinder.Application.Repository.WorkHistoryRepository.Commands.UpdateWorkHistory;
 using CFinder.Application.ServerMethods.Base;
 using CFinder.Application.ServerMethods.Override;
 using CFinder.Domain.Settings;
+using CFinder.Domain.WorkHistory;
 
 namespace CFinder.Application.Services;
 
@@ -21,6 +24,7 @@ public class CryptoFinderService : BaseService
 
     private long _itteration;
     private WorkHistoryDto? WorkHistoryDto { get; set; }
+    private UpdateWorkHistoryCommand? UpdateWorkHistoryCommand { get; set; }
     private SettingsDto? SettingsDto { get; set; }
 
     
@@ -56,86 +60,148 @@ public class CryptoFinderService : BaseService
         WorkHistoryDto = await Mediator.Send(command);
         SettingsDto = await Mediator.Send(new GetActiveSettingsQuery());
 
-        foreach (var directory in directorys)
+        try
         {
-            try
+            foreach (var directory in directorys)
             {
-                ++_itteration;
-                Console.WriteLine(_itteration + " | " + directory);
-            
-                var log = new LogDto();
-                log.Files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories).ToArray();
-                log.Authentications = await _parserServerMethod.GetAuthentication(directory);
-                var baseWallets = await _parserServerMethod.GetWalelts(directory);
-            
-                string[] passwordList = log.Authentications
-                    .Where(x => !string.IsNullOrWhiteSpace(x.Password))
-                    .Select(x => x.Password)
-                    .Distinct()
-                    .ToArray()!;
-
-                foreach (var baseWallet in baseWallets)
+                try
                 {
-                    var wallet = new WalletDto();
-                    wallet.Type = baseWallet.walletType;
-                    wallet.Directory = baseWallet.Directory;
+                    ++_itteration;
+                    Console.WriteLine(_itteration + " | " + directory);
 
-                    wallet.Encrypted = await baseWallet.GetEncrypted(SettingsDto.DecryptorSettings);
-                    wallet.Hashcat = await baseWallet.GetHashcat(wallet.Encrypted);
+                    var log = new LogDto();
+                    log.Directory = directory;
+                    log.Files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories).ToArray();
+                    var auths = await _parserServerMethod.GetAuthentication(directory, SettingsDto.ParserSettings.ParsingType);
+                    var baseWallets = await _parserServerMethod.GetWalelts(directory);
 
-                    var searchedAddresses = await baseWallet.GetOriginalAddresses();
-                    wallet.Addresses.AddRange(searchedAddresses.Select(x => new AddressInfoDto()
+                    string[] passwordList = auths
+                        .Where(x => !string.IsNullOrWhiteSpace(x.Password))
+                        .Select(x => x.Password)
+                        .Distinct()
+                        .ToArray()!;
+
+                    switch (SettingsDto.ParserSettings.SaveAs)
                     {
-                        Address = x
-                    }));
-
-                    if (SettingsDto.DecryptorSettings.TryDecrypt)
-                    {
-                        var (decrypted, password, mnemonic) = await baseWallet.Decrypt(wallet.Encrypted, passwordList);
-                        wallet.Decrypted = decrypted;
-                        wallet.Password = password;
-                        wallet.Secret = mnemonic;
-                        if (!string.IsNullOrWhiteSpace(wallet.Secret))
-                        {
-                            wallet.HasBeenDecrypted = true;
-                        }
-
-                        var addressList = _addressGeneratorServerMethod.GetEthereumAddress(wallet.Secret, SettingsDto.DecryptorSettings.DepthGenerate);
-                        wallet.Addresses.AddRange(addressList.Select(x => new AddressInfoDto()
-                        {
-                            Address = x
-                        }));
-                        wallet.Addresses = wallet.Addresses
-                            .DistinctBy(x => x.Address, StringComparer.OrdinalIgnoreCase)
-                            .ToList();
+                        case AuthSaveAs.SaveInDatabase:
+                            log.Authentications = auths;
+                            break;
+                        case AuthSaveAs.SaveInFile:
+                            await File.AppendAllLinesAsync("Passwords.txt", passwordList);
+                            break;
                     }
 
-                    var checkCryptoType = SettingsDto.BalanceCheckerSettings.CheckCrypto;
-                    foreach (var walletInfoDto in wallet.Addresses)
+                    foreach (var baseWallet in baseWallets)
                     {
-                        if (checkCryptoType == CheckCryptoMode.AllCheck ||
-                            checkCryptoType == CheckCryptoMode.CheckOnlyTokens)
+                        log.Wallets = new List<WalletDto>();
+                        var wallet = new WalletDto();
+                        wallet.Type = baseWallet.walletType;
+                        wallet.Directory = baseWallet.Directory;
+
+                        wallet.Encrypted = await baseWallet.GetEncrypted(SettingsDto.DecryptorSettings);
+                        wallet.Hashcat = await baseWallet.GetHashcat(wallet.Encrypted);
+
+                        var searchedAddresses = await baseWallet.GetOriginalAddresses();
+
+                        wallet.Addresses = new List<AddressInfoDto>();
+                        foreach (var searchedAddress in searchedAddresses)
                         {
-                            walletInfoDto.Tokens =  await _balanceServerMethodOverride.CheckToken(walletInfoDto.Address, SettingsDto.BalanceCheckerSettings.OnlyWhiteList);
-                            await Task.Delay(SettingsDto.BalanceCheckerSettings.DelayBeforeRequest);
+                            wallet.Addresses.Add(new AddressInfoDto()
+                            {
+                                Address = searchedAddress
+                            });
                         }
-                        
-                        if (checkCryptoType == CheckCryptoMode.AllCheck ||
-                            checkCryptoType == CheckCryptoMode.CheckOnlyNfts)
+
+                        if (SettingsDto.DecryptorSettings.TryDecrypt)
                         {
-                            walletInfoDto.Nfts = await _balanceServerMethodOverride.CheckNFT(walletInfoDto.Address);
-                            await Task.Delay(SettingsDto.BalanceCheckerSettings.DelayBeforeRequest);
+                            var (decrypted, password, mnemonic) =
+                                await baseWallet.Decrypt(wallet.Encrypted, passwordList);
+                            wallet.Decrypted = decrypted;
+                            wallet.Password = password;
+                            wallet.Secret = mnemonic;
+                            if (!string.IsNullOrWhiteSpace(wallet.Secret))
+                            {
+                                wallet.HasBeenDecrypted = true;
+                            }
+
+                            var addressList = _addressGeneratorServerMethod.GetEthereumAddress(wallet.Secret,
+                                SettingsDto.DecryptorSettings.DepthGenerate);
+
+                            wallet.Addresses = new List<AddressInfoDto>();
+                            foreach (var address in addressList)
+                            {
+                                wallet.Addresses.Add(new AddressInfoDto()
+                                {
+                                    Address = address
+                                });
+                            }
+                            wallet.Addresses = wallet.Addresses
+                                .DistinctBy(x => x.Address, StringComparer.OrdinalIgnoreCase)
+                                .ToList();
+                        }
+
+                        var checkCryptoType = SettingsDto.BalanceCheckerSettings.CheckCrypto;
+                        foreach (var walletInfoDto in wallet.Addresses)
+                        {
+                            if (checkCryptoType == CheckCryptoMode.AllCheck ||
+                                checkCryptoType == CheckCryptoMode.CheckOnlyTokens)
+                            {
+                                walletInfoDto.Tokens =
+                                    await _balanceServerMethodOverride.CheckToken(walletInfoDto.Address,
+                                        SettingsDto.BalanceCheckerSettings.OnlyWhiteList);
+                                await Task.Delay(SettingsDto.BalanceCheckerSettings.DelayBeforeRequest);
+                            }
+
+                            if (checkCryptoType == CheckCryptoMode.AllCheck ||
+                                checkCryptoType == CheckCryptoMode.CheckOnlyNfts)
+                            {
+                                walletInfoDto.Nfts = await _balanceServerMethodOverride.CheckNFT(walletInfoDto.Address);
+                                await Task.Delay(SettingsDto.BalanceCheckerSettings.DelayBeforeRequest);
+                            }
+                        }
+
+                        if ((SettingsDto.DecryptorSettings.DecryptSaveAs == DecryptSaveAs.SaveAlways ||
+                             (SettingsDto.DecryptorSettings.DecryptSaveAs == DecryptSaveAs.SaveAlways
+                              && string.IsNullOrWhiteSpace(wallet?.Decrypted))) && wallet != null)
+                        {
+                            log.Wallets.Add(wallet);
                         }
                     }
+
+                    var commandLogCreate = new CreateResultCommand()
+                    {
+                        Log = log
+                    };
+                    await Mediator.Send(commandLogCreate);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
-            catch (Exception ex)
+            
+            UpdateWorkHistoryCommand = new UpdateWorkHistoryCommand()
             {
-                Console.WriteLine(ex.Message);
-            }
+                Id = WorkHistoryDto.Id,
+                Current = WorkHistoryDto.Current,
+                Total = WorkHistoryDto.Total,
+                Status = Status.Finished,
+                EndDate = DateTime.Now
+            };
+            await Mediator.Send(UpdateWorkHistoryCommand);
+            
         }
-        
-        Console.WriteLine("111111111111111111111111");
-        Console.ReadLine();
+        catch
+        {
+            UpdateWorkHistoryCommand = new UpdateWorkHistoryCommand()
+            {
+                Id = WorkHistoryDto.Id,
+                Current = WorkHistoryDto.Current,
+                Total = WorkHistoryDto.Total,
+                Status = Status.Error,
+                EndDate = DateTime.Now
+            };
+            await Mediator.Send(UpdateWorkHistoryCommand);
+        }
     }
 }
