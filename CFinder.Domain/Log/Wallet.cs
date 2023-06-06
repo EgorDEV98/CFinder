@@ -54,6 +54,10 @@ public sealed class Wallet
     /// </summary>
     public ICollection<AddressInfo>? Addresses { get; init; }
     
+    
+    public Log Log { get; set; }
+    public int LogId { get; set; }
+    
     public enum WalletType : byte
     {
         [Display(Name = "Metamask")]  Metamask,

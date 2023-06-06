@@ -9,10 +9,10 @@ namespace CFinder.Application.Interfaces;
 
 public interface IDataStore
 {
-    DbSet<Settings> Settings { get; set; }
-    DbSet<WorkHistory> History { get; set; }
-    DbSet<Log> Logs { get; set; }
-    DbSet<CleanerPattern> CleanerPatterns { get; set; }
-    public DatabaseFacade DatabaseFacade { get; set; }
+    DbSet<Settings>? Settings { get; set; }
+    DbSet<WorkHistory>? History { get; set; }
+    DbSet<Log>? Logs { get; set; }
+    DbSet<CleanerPattern>? CleanerPatterns { get; set; }
+    DatabaseFacade DatabaseFacade { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

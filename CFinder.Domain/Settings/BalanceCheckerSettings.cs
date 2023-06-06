@@ -26,6 +26,9 @@ public class BalanceCheckerSettings
     /// Delay before request
     /// </summary>
     public short DelayBeforeRequest { get; set; }
+    
+    public Settings Settings { get; set; }
+    public int SettingsId { get; set; }
 
     /// <summary>
     /// GetDefault settings

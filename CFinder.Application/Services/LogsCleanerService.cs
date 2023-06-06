@@ -32,7 +32,7 @@ public class LogsCleanerService : BaseService
         var cleanerPatternListDto = await Mediator.Send(query);
         
         var patterns = cleanerPatternListDto?
-            .CleanerPatternDtos?
+            .CleanerPatterns?
             .Select(x => x.Format)
             .ToArray();
         if (patterns == null)

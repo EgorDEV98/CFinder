@@ -33,6 +33,9 @@ public class DecryptorSettings
     /// Max circle itteration
     /// </summary>
     public int CycleItterationCount { get; set; }
+    
+    public Settings Settings { get; set; }
+    public int SettingsId { get; set; }
 
     /// <summary>
     /// Get default settings

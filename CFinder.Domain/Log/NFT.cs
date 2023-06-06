@@ -42,4 +42,7 @@ public class NFT
     /// Contract address
     /// </summary>
     public string? ContractAddress { get; init; }
+    
+    public AddressInfo AddressInfo { get; set; }
+    public int AddressInfoId { get; set; }
 }

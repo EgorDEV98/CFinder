@@ -23,7 +23,7 @@ internal class GetCleanerPatternsQueryHandler : IRequestHandler<GetCleanerPatter
 
         return new CleanerPatternListDto()
         {
-            CleanerPatternDtos = cleanerPatterns
+            CleanerPatterns = cleanerPatterns
         };
     }
 }

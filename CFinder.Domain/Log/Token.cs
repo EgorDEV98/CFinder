@@ -46,4 +46,7 @@ public class Token
     /// Token image
     /// </summary>
     public string? Thumbnail { get; init; }
+    
+    public AddressInfo AddressInfo { get; set; }
+    public int AddressInfoId { get; set; }
 }

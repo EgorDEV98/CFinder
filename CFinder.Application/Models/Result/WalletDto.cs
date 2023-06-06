@@ -12,45 +12,45 @@ public class WalletDto
     /// <summary>
     /// Wallet directory
     /// </summary>
-    public string? Directory { get; init; }
+    public string? Directory { get; set; }
     
     /// <summary>
     /// Wallet type
     /// </summary>
-    public Wallet.WalletType? Type { get; init; }
+    public Wallet.WalletType? Type { get; set; }
     
     /// <summary>
     /// Encrypted message
     /// </summary>
-    public string? Encrypted { get; init; }
+    public string? Encrypted { get; set; }
     
     /// <summary>
     /// HashCat
     /// </summary>
-    public string? Hashcat { get; init; }
+    public string? Hashcat { get; set; }
     
     /// <summary>
     /// Full decrypted message
     /// </summary>
-    public string? Decrypted { get; init; }
+    public string? Decrypted { get; set; }
     
     /// <summary>
     /// Wallet password
     /// </summary>
-    public string? Password { get; init; }
+    public string? Password { get; set; }
     
     /// <summary>
     /// Mnemonic/private key
     /// </summary>
-    public string? Secret { get; init; }
+    public string? Secret { get; set; }
 
     /// <summary>
     /// Was the wallet decrypted
     /// </summary>
-    public bool HasBeenDecrypted { get; init; }
+    public bool HasBeenDecrypted { get; set; }
     
     /// <summary>
     /// Addresses
     /// </summary>
-    public ICollection<AddressInfoDto>? Addresses { get; init; }
+    public ICollection<AddressInfoDto>? Addresses { get; set; }
 }

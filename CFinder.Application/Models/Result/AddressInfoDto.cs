@@ -20,10 +20,10 @@ public class AddressInfoDto
     /// <summary>
     /// Collection of tokens belonging to the address
     /// </summary>
-    public ICollection<TokenDto>? Tokens { get; init; }
+    public ICollection<TokenDto>? Tokens { get; set; }
     
     /// <summary>
     /// Collection of NMTs belonging to the address
     /// </summary>
-    public ICollection<NFTDto>? Nfts { get; init; }
+    public ICollection<NFTDto>? Nfts { get; set; }
 }

@@ -5,7 +5,7 @@ namespace CFinder.Application.Repository.WorkHistoryRepository.Queries.GetWorkHi
 
 public class GetWorkHistoryListQuery : IRequest<WorkHistoryListDto>
 {
-    public string? OrderBy { get; set; }
+    public string OrderBy { get; set; }
     public int? RangeStart { get; set; }
     public int? RangeEnd { get; set; }
 }

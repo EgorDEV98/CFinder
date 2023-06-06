@@ -26,4 +26,8 @@ public sealed class AddressInfo
     /// Collection of NMTs belonging to the address
     /// </summary>
     public ICollection<NFT>? Nfts { get; init; }
+    
+    
+    public Wallet Wallet { get; set; }
+    public int WalletId { get; set; }
 }

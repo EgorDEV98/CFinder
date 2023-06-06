@@ -114,7 +114,7 @@ public class LogParserServerMethod
                              startString.Contains("host", StringComparison.OrdinalIgnoreCase)) &&
                              parsingType == AuthParsingType.FullParsing)
                     {
-                        auth.Url = endString;
+                        auth.Link = endString;
                     }
                     else if ((startString.Contains("user", StringComparison.OrdinalIgnoreCase) ||
                              startString.Contains("login", StringComparison.OrdinalIgnoreCase)) &&

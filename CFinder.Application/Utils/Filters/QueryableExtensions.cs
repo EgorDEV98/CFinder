@@ -37,7 +37,7 @@ public static class QueryableExtensions
     /// <param name="from">от (default 1)</param>
     /// <param name="to">до (default 50)</param>
     /// <returns></returns>
-    public static IQueryable<WorkHistory> ApplyRange(this IQueryable<WorkHistory> query, int? from = 1, int? to = 50)
+    public static IQueryable<WorkHistory>? ApplyRange(this IQueryable<WorkHistory>? query, int? from = 1, int? to = 50)
     {
         query = query.Where(x => x.Id >= from && x.Id <= to);
         return query;

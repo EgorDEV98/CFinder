@@ -10,7 +10,7 @@ public class LogDto
     /// <summary>
     /// Logs directory
     /// </summary>
-    public string? Directory { get; init; }
+    public string? Directory { get; set; }
     
     /// <summary>
     /// All files 

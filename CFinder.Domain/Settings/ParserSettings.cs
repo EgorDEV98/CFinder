@@ -21,6 +21,9 @@ public class ParserSettings
     /// Parsing authentical data type
     /// </summary>
     public AuthParsingType ParsingType { get; init; }
+    
+    public Settings Settings { get; set; }
+    public int SettingsId { get; set; }
 
     /// <summary>
     /// Get default settings

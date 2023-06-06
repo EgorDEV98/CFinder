@@ -26,4 +26,7 @@ public class Authentication
     /// Account password
     /// </summary>
     public string? Password { get; set; }
+    
+    public Log Log { get; set; }
+    public int LogId { get; set; }
 }
