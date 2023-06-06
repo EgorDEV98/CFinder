@@ -32,6 +32,11 @@ public class DecryptorSettingsDto
     /// <summary>
     /// Режим парсинга кошельков
     /// </summary>
-    public WalletParsingType WalletParsingType { get; set; }
+    public EncryptedParsingType EncryptedParsingType { get; set; }
+    
+    /// <summary>
+    /// Кол-во иттераций в поиске циклом
+    /// </summary>
+    public int CycleItterationCount { get; set; }
     
 }

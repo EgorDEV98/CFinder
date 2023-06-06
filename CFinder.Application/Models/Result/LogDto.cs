@@ -1,6 +1,6 @@
-﻿namespace CFinder.Domain.Log;
+﻿namespace CFinder.Application.Models.Result;
 
-public class Log
+public class LogDto
 {
     /// <summary>
     /// Идентификатор
@@ -20,10 +20,10 @@ public class Log
     /// <summary>
     /// Коллекция авторизационных данных
     /// </summary>
-    public virtual ICollection<Authentication>? Authentications { get; set; }
+    public virtual ICollection<AuthenticationDto>? Authentications { get; set; }
     
     /// <summary>
     /// Кошельки
     /// </summary>
-    public virtual ICollection<Wallet>? Wallets { get; set; } 
+    public virtual ICollection<WalletDto>? Wallets { get; set; } 
 }

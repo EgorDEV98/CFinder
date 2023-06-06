@@ -1,5 +1,6 @@
 ﻿using CFinder.Application.Interfaces;
 using CFinder.Domain.Log;
+using CFinder.Domain.LogsCleaner;
 using CFinder.Domain.Settings;
 using CFinder.Domain.WorkHistory;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ public sealed class DataStore : DbContext, IDataStore
     public DbSet<Settings> Settings { get; set; }
     public DbSet<WorkHistory> History { get; set; }
     public DbSet<Log> Logs { get; set; }
+    public DbSet<CleanerPattern> CleanerPatterns { get; set; }
     public DatabaseFacade DatabaseFacade { get; set; }
 
     public DataStore(

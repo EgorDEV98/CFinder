@@ -22,9 +22,10 @@ public static class SettingsMapping
                 Id = settings.DecryptorSettings.Id,
                 DecryptSaveAs = settings.DecryptorSettings.DecryptSaveAs,
                 DepthGenerate = settings.DecryptorSettings.DepthGenerate,
-                WalletParsingType = settings.DecryptorSettings.WalletParsingType,
+                EncryptedParsingType = settings.DecryptorSettings.EncryptedParsingType,
                 ThreadCount = settings.DecryptorSettings.ThreadCount,
-                TryDecrypt = settings.DecryptorSettings.TryDecrypt
+                TryDecrypt = settings.DecryptorSettings.TryDecrypt,
+                CycleItterationCount = settings.DecryptorSettings.CycleItterationCount
             },
             BalanceCheckerSettings = new BalanceCheckerSettingsDto()
             {
@@ -59,9 +60,10 @@ public static class SettingsMapping
                 Id = settings.DecryptorSettings.Id,
                 DecryptSaveAs = settings.DecryptorSettings.DecryptSaveAs,
                 DepthGenerate = settings.DecryptorSettings.DepthGenerate,
-                WalletParsingType = settings.DecryptorSettings.WalletParsingType,
+                EncryptedParsingType = settings.DecryptorSettings.EncryptedParsingType,
                 ThreadCount = settings.DecryptorSettings.ThreadCount,
-                TryDecrypt = settings.DecryptorSettings.TryDecrypt
+                TryDecrypt = settings.DecryptorSettings.TryDecrypt,
+                CycleItterationCount = settings.DecryptorSettings.CycleItterationCount
             },
             BalanceCheckerSettings = new BalanceCheckerSettings()
             {
@@ -94,9 +96,10 @@ public static class SettingsMapping
             {
                 DecryptSaveAs = settings.DecryptorSettings.DecryptSaveAs,
                 DepthGenerate = settings.DecryptorSettings.DepthGenerate,
-                WalletParsingType = settings.DecryptorSettings.WalletParsingType,
+                WalletParsingType = settings.DecryptorSettings.EncryptedParsingType,
                 ThreadCount = settings.DecryptorSettings.ThreadCount,
-                TryDecrypt = settings.DecryptorSettings.TryDecrypt
+                TryDecrypt = settings.DecryptorSettings.TryDecrypt,
+                CycleItterationCount = settings.DecryptorSettings.CycleItterationCount
             },
             BalanceCheckerSettings = new BalanceCheckerSettingsVm()
             {

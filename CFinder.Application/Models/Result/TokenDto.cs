@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CFinder.Domain.Log;
 
-namespace CFinder.Domain.Log;
+namespace CFinder.Application.Models.Result;
 
-public class Token
+public class TokenDto
 {
     /// <summary>
     /// Идентификатор
@@ -52,7 +52,7 @@ public class Token
     /// <summary>
     /// Навигационное поле
     /// </summary>
-    public AddressInfo AddressInfo { get; set; }
+    public AddressInfoDto AddressInfo { get; set; }
     
     /// <summary>
     /// Внешний ключ

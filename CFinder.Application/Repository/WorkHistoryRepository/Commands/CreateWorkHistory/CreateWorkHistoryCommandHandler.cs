@@ -23,7 +23,8 @@ internal class CreateWorkHistoryCommandHandler : IRequestHandler<CreateWorkHisto
         var command = new WorkHistory()
         {
             Name = request.Name,
-            Path = request.Path
+            Path = request.Path,
+            Total = request.Total ?? 0
         };
 
         await _dataStore.History.AddAsync(command, cancellationToken);

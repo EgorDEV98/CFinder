@@ -34,7 +34,7 @@ public class BalanceCheckerSettings
         => new BalanceCheckerSettings()
         {
             Id = 0,
-            CheckCrypto = CheckCryptoMode.CheckOnlyNfts,
+            CheckCrypto = CheckCryptoMode.AllCheck,
             DelayBeforeRequest = 1500,
             OnlyWhiteList = false
         };

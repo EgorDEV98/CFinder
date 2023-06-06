@@ -30,9 +30,14 @@ public class DecryptorSettings
     public DecryptSaveAs DecryptSaveAs { get; set; }
     
     /// <summary>
-    /// Режим парсинга кошельков
+    /// Режим парсинга зашифрованного сообщения
     /// </summary>
-    public WalletParsingType WalletParsingType { get; set; }
+    public EncryptedParsingType EncryptedParsingType { get; set; }
+    
+    /// <summary>
+    /// Кол-во иттераций в поиске циклом
+    /// </summary>
+    public int CycleItterationCount { get; set; }
 
     /// <summary>
     /// Получить стандартные настройки
@@ -44,7 +49,9 @@ public class DecryptorSettings
             ThreadCount = 100,
             DepthGenerate = 3,
             TryDecrypt = true,
-            DecryptSaveAs = DecryptSaveAs.SaveAlways
+            DecryptSaveAs = DecryptSaveAs.SaveAlways,
+            CycleItterationCount = 1000,
+            EncryptedParsingType = EncryptedParsingType.Cycle
         };
 }
 
@@ -60,7 +67,7 @@ public enum DecryptSaveAs : byte
 /// <summary>
 /// Режим поиска кошельков
 /// </summary>
-public enum WalletParsingType : byte
+public enum EncryptedParsingType : byte
 {
     [Display(Name = "Regex mode")]     Regex,
     [Display(Name = "Cycle mode")]     Cycle

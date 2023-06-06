@@ -39,7 +39,8 @@ internal class UpdateSettingsCommandHandler : IRequestHandler<UpdateSettingsComm
             ThreadCount = request.DecryptorSettings.ThreadCount,
             TryDecrypt = request.DecryptorSettings.TryDecrypt,
             DecryptSaveAs = request.DecryptorSettings.DecryptSaveAs,
-            WalletParsingType = request.DecryptorSettings.WalletParsingType
+            EncryptedParsingType = request.DecryptorSettings.EncryptedParsingType,
+            CycleItterationCount = request.DecryptorSettings.CycleItterationCount
         };
         entity.ParserSettings = new ParserSettings()
         {

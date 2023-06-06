@@ -51,7 +51,7 @@ internal class UpdateSettingsCommandValidation : AbstractValidator<UpdateSetting
                 .GreaterThan(1).WithMessage("Min Thread 1");
             RuleFor(x => x.DecryptSaveAs)
                 .NotNull().WithMessage("Decrypt save type can not be null");
-            RuleFor(x => x.WalletParsingType)
+            RuleFor(x => x.EncryptedParsingType)
                 .NotNull().WithMessage("Wallet parsing type can not be null");
         }
     }

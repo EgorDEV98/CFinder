@@ -38,6 +38,11 @@ public class WorkHistoryDto
     /// Текущая иттерация
     /// </summary>
     public long Current { get; set; }
+
+    /// <summary>
+    /// Процент выполнения
+    /// </summary>
+    public double Percent => (double)Current / Total * 100;
     
     /// <summary>
     /// Статус работы операции

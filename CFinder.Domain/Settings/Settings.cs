@@ -31,7 +31,7 @@ public class Settings
     /// Настройки проверки баланса
     /// </summary>
     public BalanceCheckerSettings BalanceCheckerSettings { get; set; } = null!;
-
+    
     /// <summary>
     /// Получить стандартные настройки
     /// </summary>

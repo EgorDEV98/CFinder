@@ -74,7 +74,7 @@ public class UpdateSettingsDto
         /// <summary>
         /// Режим парсинга кошельков
         /// </summary>
-        public WalletParsingType WalletParsingType { get; set; }
+        public EncryptedParsingType WalletParsingType { get; set; }
     }
     /// <summary>
     /// Настройки поиска баланса

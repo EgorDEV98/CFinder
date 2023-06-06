@@ -17,4 +17,9 @@ public class CreateWorkHistoryCommand : IRequest<WorkHistoryDto>
     /// Путь до папки/файла
     /// </summary>
     public string? Path { get; set; }
+
+    /// <summary>
+    /// Предполагаемое количество иттераций
+    /// </summary>
+    public long? Total { get; set; }
 }
