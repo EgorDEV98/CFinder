@@ -3,7 +3,7 @@
 public class WorkHistoryListDto
 {
     /// <summary>
-    /// Профилей
+    /// Work history list DTO
     /// </summary>
     public IList<WorkHistoryDto>? WorkHistory { get; set; }
 }

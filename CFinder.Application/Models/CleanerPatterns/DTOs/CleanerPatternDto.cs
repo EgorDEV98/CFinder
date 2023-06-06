@@ -3,12 +3,12 @@
 public class CleanerPatternDto
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; init; }
     
     /// <summary>
-    /// Формат файла
+    /// File Format
     /// </summary>
-    public string Format { get; set; }
+    public string Format { get; init; }
 }

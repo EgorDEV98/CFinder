@@ -5,54 +5,52 @@ namespace CFinder.Application.Models.Result;
 public class WalletDto
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; init; }
     
     /// <summary>
-    /// Папка с кошельком
+    /// Wallet directory
     /// </summary>
-    public string? Directory { get; set; }
+    public string? Directory { get; init; }
     
     /// <summary>
-    /// Тип кошелька
+    /// Wallet type
     /// </summary>
-    public Wallet.WalletType? Type { get; set; }
+    public Wallet.WalletType? Type { get; init; }
     
     /// <summary>
-    /// Зашифрованное сообщение
+    /// Encrypted message
     /// </summary>
-    public string? Encrypted { get; set; }
+    public string? Encrypted { get; init; }
     
     /// <summary>
-    /// HashCat строка
+    /// HashCat
     /// </summary>
-    public string? Hashcat { get; set; }
+    public string? Hashcat { get; init; }
     
     /// <summary>
-    /// Расшифрованное сообщение
+    /// Full decrypted message
     /// </summary>
-    public string? Decrypted { get; set; }
+    public string? Decrypted { get; init; }
     
     /// <summary>
-    /// Пароль от кошелька
+    /// Wallet password
     /// </summary>
-    public string? Password { get; set; }
+    public string? Password { get; init; }
     
     /// <summary>
-    /// Мнемоника/приватный ключ
+    /// Mnemonic/private key
     /// </summary>
-    public string? Secret { get; set; }
+    public string? Secret { get; init; }
 
     /// <summary>
-    /// Был ли расшифрован кошелек
+    /// Was the wallet decrypted
     /// </summary>
-    public bool HasBeenDecrypted { get; set; }
-
-    /// <summary>
-    /// Адреса
-    /// </summary>
-    public virtual ICollection<AddressInfoDto>? Addresses { get; set; }
-
+    public bool HasBeenDecrypted { get; init; }
     
+    /// <summary>
+    /// Addresses
+    /// </summary>
+    public ICollection<AddressInfoDto>? Addresses { get; init; }
 }

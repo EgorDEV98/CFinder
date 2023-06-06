@@ -31,7 +31,7 @@ public class BalanceCheckerSettings
     /// GetDefault settings
     /// </summary>
     public static BalanceCheckerSettings GetDefault()
-        => new BalanceCheckerSettings()
+        => new()
         {
             Id = 0,
             CheckCrypto = CheckCryptoMode.AllCheck,

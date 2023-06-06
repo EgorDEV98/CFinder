@@ -38,7 +38,7 @@ public class DecryptorSettings
     /// Get default settings
     /// </summary>
     public static DecryptorSettings GetDefault() 
-        => new DecryptorSettings()
+        => new()
         {
             Id = 0,
             DepthGenerate = 3,

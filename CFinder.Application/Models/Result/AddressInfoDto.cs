@@ -3,22 +3,27 @@
 public class AddressInfoDto
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
-    public int Id { get; set; }
-
-    /// <summary>
-    /// Адрес криптовалюты
-    /// </summary>
-    public string Address { get; set; } 
-
-    /// <summary>
-    /// Коллекция токенов принадлежащих адресу
-    /// </summary>
-    public virtual ICollection<TokenDto>? Tokens { get; set; }
+    public int Id { get; init; }
     
     /// <summary>
-    /// Коллекция НФТ принадлежащих адресу
+    /// Main address
     /// </summary>
-    public virtual ICollection<NFTDto>? Nfts { get; set; }
+    public string? Address { get; init; }
+    
+    /// <summary>
+    /// Number Of Address
+    /// </summary>
+    public int? NumberOfAddress { get; init; }
+    
+    /// <summary>
+    /// Collection of tokens belonging to the address
+    /// </summary>
+    public ICollection<TokenDto>? Tokens { get; init; }
+    
+    /// <summary>
+    /// Collection of NMTs belonging to the address
+    /// </summary>
+    public ICollection<NFTDto>? Nfts { get; init; }
 }

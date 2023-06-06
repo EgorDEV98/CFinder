@@ -2,40 +2,53 @@
 
 namespace CFinder.Application.Models.WorkHistory.VMs;
 
+/// <summary>
+/// Service history VM
+/// </summary>
 public class WorkHistoryVm
 {
     /// <summary>
-    /// Название операции
+    /// Identifier
+    /// </summary>
+    public int Id { get; set; }
+    
+    /// <summary>
+    /// Operation name
     /// </summary>
     public string? Name { get; set; }
 
     /// <summary>
-    /// Директория
+    /// Operation directory
     /// </summary>
     public string? Path { get; set; }
     
     /// <summary>
-    /// Начало работы операции
+    /// Operation start date and time 
     /// </summary>
     public DateTime StartDate { get; set; }
     
     /// <summary>
-    /// Окончание работы операции
+    /// Operation end date and time 
     /// </summary>
     public DateTime? EndDate { get; set; }
 
     /// <summary>
-    /// Всего иттераций
+    /// Total itteration
     /// </summary>
     public long Total { get; set; }
     
     /// <summary>
-    /// Текущая иттерация
+    /// Current itteration
     /// </summary>
     public long Current { get; set; }
     
     /// <summary>
-    /// Статус работы операции
+    /// Percentage of completion
+    /// </summary>
+    public double Percent => (double)Current / Total * 100;
+    
+    /// <summary>
+    /// Work status
     /// </summary>
     public Status Status { get; set; }
 }

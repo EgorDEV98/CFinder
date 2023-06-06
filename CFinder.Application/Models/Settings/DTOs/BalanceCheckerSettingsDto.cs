@@ -2,25 +2,40 @@
 
 namespace CFinder.Application.Models.Settings;
 
+/// <summary>
+/// Balance crypto checker settings
+/// </summary>
 public class BalanceCheckerSettingsDto
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
     public int Id { get; set; }
     
     /// <summary>
-    /// Режим проверки баланса
+    /// Check crypto mode
     /// </summary>
     public CheckCryptoMode CheckCrypto { get; set; }
     
     /// <summary>
-    /// Только авторизованные CoinGeco токены
+    /// Only CoinGeco Tokens
     /// </summary>
     public bool OnlyWhiteList { get; set; }
     
     /// <summary>
-    /// Задержка перед запросом
+    /// Delay before request
     /// </summary>
     public short DelayBeforeRequest { get; set; }
+
+    /// <summary>
+    /// GetDefault settings
+    /// </summary>
+    public static BalanceCheckerSettingsDto GetDefault()
+        => new()
+        {
+            Id = 0,
+            CheckCrypto = CheckCryptoMode.AllCheck,
+            DelayBeforeRequest = 1500,
+            OnlyWhiteList = true
+        };
 }

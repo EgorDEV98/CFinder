@@ -3,27 +3,27 @@
 public class LogDto
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
     public int Id { get; set; }
 
     /// <summary>
-    /// Папка с логом/файлом
+    /// Logs directory
     /// </summary>
-    public string Directory { get; set; } 
+    public string? Directory { get; init; }
     
     /// <summary>
-    /// Все файлы лога
+    /// All files 
     /// </summary>
     public ICollection<string>? Files { get; set; }
     
     /// <summary>
-    /// Коллекция авторизационных данных
+    /// Collection of authorization data
     /// </summary>
     public virtual ICollection<AuthenticationDto>? Authentications { get; set; }
-
+    
     /// <summary>
-    /// Кошельки
+    /// Crypto wallets
     /// </summary>
-    public virtual ICollection<WalletDto>? Wallets { get; set; }
+    public virtual ICollection<WalletDto>? Wallets { get; set; } 
 }

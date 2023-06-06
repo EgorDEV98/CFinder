@@ -26,7 +26,7 @@ public class ParserSettings
     /// Get default settings
     /// </summary>
     public static ParserSettings GetDefault()
-        => new ParserSettings()
+        => new()
         {
             Id = 0,
             ParsingType = AuthParsingType.OnlyPassword,

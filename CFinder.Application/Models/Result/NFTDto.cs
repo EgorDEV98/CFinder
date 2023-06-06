@@ -3,42 +3,42 @@
 public class NFTDto
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; init; }
     
     /// <summary>
-    /// Имя блокчейн сети
+    /// Blockchain node
     /// </summary>
-    public string? Blockchain { get; set; }
+    public string? Blockchain { get; init; }
     
     /// <summary>
-    /// Имя НФТ
+    /// NFT name
     /// </summary>
-    public string? Name { get; set; }
+    public string? Name { get; init; }
     
     /// <summary>
-    /// Ссылка на NFT
+    /// Link to NFT
     /// </summary>
-    public string? TokenUrl { get; set; }
+    public string? TokenUrl { get; init; }
     
     /// <summary>
-    /// Изображение
+    /// Image
     /// </summary>
-    public string? ImageUrl { get; set; }
+    public string? ImageUrl { get; init; }
     
     /// <summary>
-    /// Имя коллекции
+    /// Collaction name
     /// </summary>
-    public string? CollectionName { get; set; }
+    public string? CollectionName { get; init; }
     
     /// <summary>
-    /// Символ в сети
+    /// Symbol
     /// </summary>
-    public string? Symbol { get; set; }
+    public string? Symbol { get; init; }
     
     /// <summary>
-    /// Адрес контракта
+    /// Contract address
     /// </summary>
-    public string? ContractAddress { get; set; }
+    public string? ContractAddress { get; init; }
 }

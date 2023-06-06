@@ -5,5 +5,5 @@ public class CleanerPatternListDto
     /// <summary>
     /// Лист паттернов
     /// </summary>
-    public IList<CleanerPatternDto>? CleanerPatternDtos { get; set; }
+    public IList<CleanerPatternDto>? CleanerPatterns { get; set; }
 }

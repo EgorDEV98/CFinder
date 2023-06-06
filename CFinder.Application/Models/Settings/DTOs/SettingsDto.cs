@@ -3,32 +3,50 @@
 public class SettingsDto
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
     public int Id { get; set; }
 
     /// <summary>
-    /// Имя профиля
+    /// Profile name
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } 
+        = "NONAME";
     
     /// <summary>
-    /// Активность профиля
+    /// Profile activity
     /// </summary>
     public bool IsActive { get; set; }
 
     /// <summary>
-    /// Настройки парсера
+    /// Parser settings
     /// </summary>
-    public ParserSettingsDto ParserSettings { get; set; }
+    public ParserSettingsDto ParserSettings { get; set; } 
+        = ParserSettingsDto.GetDefault();
 
     /// <summary>
-    /// Настройки декриптовщика
+    /// Decryptor settings
     /// </summary>
-    public DecryptorSettingsDto DecryptorSettings { get; set; }
+    public DecryptorSettingsDto DecryptorSettings { get; set; } 
+        = DecryptorSettingsDto.GetDefault();
 
     /// <summary>
-    /// Настройки проверки баланса
+    /// Balance checker settings
     /// </summary>
     public BalanceCheckerSettingsDto BalanceCheckerSettings { get; set; }
+        = BalanceCheckerSettingsDto.GetDefault();
+    
+    /// <summary>
+    /// Get default settings
+    /// </summary>
+    public static SettingsDto GetDefault()
+        => new()
+        {
+            Id = 0,
+            IsActive = true,
+            Name = "DEFAULT",
+            DecryptorSettings = DecryptorSettingsDto.GetDefault(),
+            ParserSettings = ParserSettingsDto.GetDefault(),
+            BalanceCheckerSettings = BalanceCheckerSettingsDto.GetDefault()
+        };
 }

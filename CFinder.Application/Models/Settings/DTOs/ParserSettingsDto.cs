@@ -2,20 +2,34 @@
 
 namespace CFinder.Application.Models.Settings;
 
+/// <summary>
+/// Parser authentical settings
+/// </summary>
 public class ParserSettingsDto
 {
     /// <summary>
-    /// Идентификатор
+    /// Identifier
     /// </summary>
-    public int Id { get; set; }
-    
+    public int Id { get; init; }
+
     /// <summary>
-    /// Тип сохрания паролей
+    /// Save password type
     /// </summary>
-    public AuthSaveAs SaveAs { get; set; }
-    
+    public AuthSaveAs SaveAs { get; init; }
+
     /// <summary>
-    /// Тип парсинга
+    /// Parsing authentical data type
     /// </summary>
-    public AuthParsingType ParsingType { get; set; }
+    public AuthParsingType ParsingType { get; init; }
+
+    /// <summary>
+    /// Get default settings
+    /// </summary>
+    public static ParserSettingsDto GetDefault()
+        => new()
+        {
+            Id = 0,
+            ParsingType = AuthParsingType.OnlyPassword,
+            SaveAs = AuthSaveAs.SaveInFile
+        };
 }

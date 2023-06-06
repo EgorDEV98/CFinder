@@ -3,22 +3,27 @@
 public class AuthenticationDto
 {
     /// <summary>
-    /// Ссылка
+    /// Identifier
     /// </summary>
-    public string? Url { get; set; }
+    public int Id { get; set; }
     
     /// <summary>
-    /// Браузер
+    /// The application from which the data was taken
     /// </summary>
-    public string? Application { get; set; }
+    public string? Applcation { get; set; }
     
     /// <summary>
-    /// Логин
+    /// Link
+    /// </summary>
+    public string? Link { get; set; }
+    
+    /// <summary>
+    /// Account login 
     /// </summary>
     public string? Login { get; set; }
     
     /// <summary>
-    /// Пароль
+    /// Account password
     /// </summary>
     public string? Password { get; set; }
 }
