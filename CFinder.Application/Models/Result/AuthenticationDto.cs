@@ -10,7 +10,7 @@ public class AuthenticationDto
     /// <summary>
     /// The application from which the data was taken
     /// </summary>
-    public string? Applcation { get; set; }
+    public string? Application { get; set; }
     
     /// <summary>
     /// Link

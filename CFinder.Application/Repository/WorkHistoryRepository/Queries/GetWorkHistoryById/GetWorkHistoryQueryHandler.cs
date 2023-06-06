@@ -1,6 +1,6 @@
 ﻿using CFinder.Application.Common.Exceptions;
+using CFinder.Application.Common.Mappings;
 using CFinder.Application.Interfaces;
-using CFinder.Application.Mappings;
 using CFinder.Application.Models.WorkHistory.DTOs;
 using CFinder.Domain.WorkHistory;
 using MediatR;

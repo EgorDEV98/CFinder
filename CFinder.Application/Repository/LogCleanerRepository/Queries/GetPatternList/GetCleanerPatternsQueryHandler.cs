@@ -1,5 +1,5 @@
-﻿using CFinder.Application.Interfaces;
-using CFinder.Application.Mappings;
+﻿using CFinder.Application.Common.Mappings;
+using CFinder.Application.Interfaces;
 using CFinder.Application.Models.CleanerPatterns.DTOs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

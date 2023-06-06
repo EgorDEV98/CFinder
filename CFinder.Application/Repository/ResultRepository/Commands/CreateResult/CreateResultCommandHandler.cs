@@ -1,5 +1,5 @@
-﻿using CFinder.Application.Interfaces;
-using CFinder.Application.Mappings;
+﻿using CFinder.Application.Common.Mappings;
+using CFinder.Application.Interfaces;
 using MediatR;
 
 namespace CFinder.Application.Repository.ResultRepository.Commands.CreateResult;

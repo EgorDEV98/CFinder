@@ -1,23 +1,21 @@
 ﻿using CFinder.Application.Models.CleanerPatterns.DTOs;
 using CFinder.Application.Models.CleanerPatterns.VMs;
-using CFinder.Application.Models.Settings;
 using CFinder.Domain.LogsCleaner;
-using CFinder.Domain.Settings;
 
-namespace CFinder.Application.Mappings;
+namespace CFinder.Application.Common.Mappings;
 
 public static class CleanerPatternMapping
 {
      /// <summary>
     /// DB Model to DTO
     /// </summary>
-    /// <param name="settings"></param>
+    /// <param name="cleanerPattern">CleanerPattern obj</param>
     /// <returns></returns>
     public static CleanerPatternDto ToDto(this CleanerPattern cleanerPattern)
      {
          return new CleanerPatternDto()
          {
-             Id = cleanerPattern.Id,
+             Id     = cleanerPattern.Id,
              Format = cleanerPattern.Format
          };
      }
@@ -25,13 +23,13 @@ public static class CleanerPatternMapping
     /// <summary>
     /// DTO to DB Model
     /// </summary>
-    /// <param name="settings"></param>
+    /// <param name="cleanerPattern">CleanerPatternDto obj</param>
     /// <returns></returns>
     public static CleanerPattern ToDomain(this CleanerPatternDto cleanerPattern)
     {
         return new CleanerPattern()
         {
-            Id = cleanerPattern.Id,
+            Id     = cleanerPattern.Id,
             Format = cleanerPattern.Format
         };
     }
@@ -39,7 +37,7 @@ public static class CleanerPatternMapping
     /// <summary>
     /// DTO to VM
     /// </summary>
-    /// <param name="settings"></param>
+    /// <param name="cleanerPattern">CleanerPatternDto obj</param>
     /// <returns></returns>
     public static CleanerPatternVm ToVm(this CleanerPatternDto cleanerPattern)
     {

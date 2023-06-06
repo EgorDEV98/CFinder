@@ -1,60 +1,61 @@
 ﻿using CFinder.Application.Models.Result;
 using CFinder.Domain.Log;
 
-namespace CFinder.Application.Mappings;
+namespace CFinder.Application.Common.Mappings;
 
 public static class ResultMapping
 {
-    public static LogDto ToDto(this Log settings)
+    public static LogDto ToDto(this Log log)
     {
         return new LogDto()
         {
-            Id = settings.Id,
-            Authentications = settings.Authentications.Select(x => new AuthenticationDto()
+            Id = log.Id,
+            Authentications = log.Authentications?.Select(auth => new AuthenticationDto()
             {
-                Application = x.Applcation,
-                Login = x.Login,
-                Password = x.Password,
-                Url = x.Link
+                Application = auth.Application,
+                Login       = auth.Login,
+                Password    = auth.Password,
+                Link        = auth.Link
             }).ToArray(),
-            Directory = settings.Directory,
-            Files = settings.Files,
-            Wallets = settings?.Wallets?.Select(x => new WalletDto()
+            Directory = log.Directory,
+            Files = log.Files,
+            Wallets = log.Wallets?.Select(wallet => new WalletDto()
             {
-                Directory = x.Directory,
-                Password = x.Password,
-                Decrypted = x.Decrypted,
-                Encrypted = x.Encrypted,
-                Id = x.Id,
-                Hashcat = x.Hashcat,
-                Secret = x.Secret,
-                Type = x.Type,
-                HasBeenDecrypted = x.HasBeenDecrypted,
-                Addresses = x.Addresses?.Select(adresses => new AddressInfoDto()
+                Id        = wallet.Id,
+                Directory =  wallet.Directory,
+                Password  =  wallet.Password,
+                Decrypted =  wallet.Decrypted,
+                Encrypted =  wallet.Encrypted,
+                Hashcat   =  wallet.Hashcat,
+                Secret    =  wallet.Secret,
+                Type      =  wallet.Type,
+                HasBeenDecrypted = wallet.HasBeenDecrypted,
+                Addresses = wallet.Addresses?.Select(adressesInfo => new AddressInfoDto()
                 {
-                    Id = adresses.Id,
-                    Address = adresses.Address ?? string.Empty,
-                    Nfts = adresses.Nfts.Select(nft => new NFTDto()
+                    Id              = adressesInfo.Id,
+                    Address         = adressesInfo.Address ?? string.Empty,
+                    NumberOfAddress = adressesInfo.NumberOfAddress,
+                    Nfts            = adressesInfo.Nfts?.Select(nft => new NFTDto()
                     {
-                        Id = nft.Id,
-                        Blockchain = nft.Blockchain,
-                        Name = nft.Name,
-                        Symbol = nft.Symbol,
-                        CollectionName = nft.CollectionName,
+                        Id              = nft.Id,
+                        Blockchain      = nft.Blockchain,
+                        Name            = nft.Name,
+                        Symbol          = nft.Symbol,
+                        CollectionName  = nft.CollectionName,
                         ContractAddress = nft.ContractAddress,
-                        ImageUrl = nft.ImageUrl,
-                        TokenUrl = nft.TokenUrl
+                        ImageUrl        = nft.ImageUrl,
+                        TokenUrl        = nft.TokenUrl
                     }).ToArray(),
-                    Tokens = adresses.Tokens.Select(token => new TokenDto()
+                    Tokens = adressesInfo.Tokens?.Select(token => new TokenDto()
                     {
-                        Id = token.Id,
-                        Blockchain = token.Blockchain,
-                        Type = token.Type,
-                        Balance = token.Balance,
-                        Thumbnail = token.Thumbnail,
-                        BalanceUsd = token.BalanceUsd,
-                        TokenName = token.TokenName,
-                        TokenPrice = token.TokenPrice,
+                        Id          = token.Id,
+                        Blockchain  = token.Blockchain,
+                        Type        = token.Type,
+                        Balance     = token.Balance,
+                        Thumbnail   = token.Thumbnail,
+                        BalanceUsd  = token.BalanceUsd,
+                        TokenName   = token.TokenName,
+                        TokenPrice  = token.TokenPrice,
                         TokenSymbol = token.TokenSymbol
                     }).ToArray()
                 }).ToArray()
@@ -62,56 +63,57 @@ public static class ResultMapping
         };
     }
     
-    public static Log ToDomain(this LogDto settings)
+    public static Log ToDomain(this LogDto log)
     {
         return new Log()
         {
-            Id = settings.Id,
-            Authentications = settings.Authentications?.Select(x => new Authentication()
+            Id = log.Id,
+            Authentications = log.Authentications?.Select(auth => new Authentication()
             {
-                Applcation = x.Application,
-                Login = x.Login,
-                Password = x.Password,
-                Link = x.Url
+                Application = auth.Application,
+                Login       = auth.Login,
+                Password    = auth.Password,
+                Link        = auth.Link
             }).ToArray(),
-            Directory = settings.Directory,
-            Files = settings.Files,
-            Wallets = settings?.Wallets?.Select(x => new Wallet()
+            Directory = log.Directory,
+            Files = log.Files,
+            Wallets = log.Wallets?.Select(wallet => new Wallet()
             {
-                Directory = x.Directory,
-                Password = x.Password,
-                Decrypted = x.Decrypted,
-                Encrypted = x.Encrypted,
-                Id = x.Id,
-                Hashcat = x.Hashcat,
-                Secret = x.Secret,
-                Type = x.Type,
-                HasBeenDecrypted = x.HasBeenDecrypted,
-                Addresses = x.Addresses?.Select(adresses => new AddressInfo()
+                Id        = wallet.Id,
+                Directory =  wallet.Directory,
+                Password  =  wallet.Password,
+                Decrypted =  wallet.Decrypted,
+                Encrypted =  wallet.Encrypted,
+                Hashcat   =  wallet.Hashcat,
+                Secret    =  wallet.Secret,
+                Type      =  wallet.Type,
+                HasBeenDecrypted = wallet.HasBeenDecrypted,
+                Addresses = wallet.Addresses?.Select(adressesInfo => new AddressInfo()
                 {
-                    Id = adresses.Id,
-                    Address = adresses.Address ?? string.Empty,
-                    Nfts = adresses.Nfts?.Select(nft => new NFT()
+                    Id              = adressesInfo.Id,
+                    Address         = adressesInfo.Address ?? string.Empty,
+                    NumberOfAddress = adressesInfo.NumberOfAddress,
+                    Nfts            = adressesInfo.Nfts?.Select(nft => new NFT()
                     {
-                        Id = nft.Id,
-                        Blockchain = nft.Blockchain,
-                        Name = nft.Name,
-                        Symbol = nft.Symbol,
-                        CollectionName = nft.CollectionName,
+                        Id              = nft.Id,
+                        Blockchain      = nft.Blockchain,
+                        Name            = nft.Name,
+                        Symbol          = nft.Symbol,
+                        CollectionName  = nft.CollectionName,
                         ContractAddress = nft.ContractAddress,
-                        ImageUrl = nft.ImageUrl,
-                        TokenUrl = nft.TokenUrl
+                        ImageUrl        = nft.ImageUrl,
+                        TokenUrl        = nft.TokenUrl
                     }).ToArray(),
-                    Tokens = adresses.Tokens?.Select(token => new Token()
+                    Tokens = adressesInfo.Tokens?.Select(token => new Token()
                     {
-                        Id = token.Id,
-                        Blockchain = token.Blockchain,
-                        Type = token.Type,
-                        Balance = token.Balance,
-                        Thumbnail = token.Thumbnail,
-                        BalanceUsd = token.BalanceUsd,
-                        TokenName = token.TokenName,
-                        TokenPrice = token.TokenPrice,
+                        Id          = token.Id,
+                        Blockchain  = token.Blockchain,
+                        Type        = token.Type,
+                        Balance     = token.Balance,
+                        Thumbnail   = token.Thumbnail,
+                        BalanceUsd  = token.BalanceUsd,
+                        TokenName   = token.TokenName,
+                        TokenPrice  = token.TokenPrice,
                         TokenSymbol = token.TokenSymbol
                     }).ToArray()
                 }).ToArray()

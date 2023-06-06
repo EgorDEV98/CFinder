@@ -2,7 +2,7 @@
 using CFinder.Application.Models.WorkHistory.VMs;
 using CFinder.Domain.WorkHistory;
 
-namespace CFinder.Application.Mappings;
+namespace CFinder.Application.Common.Mappings;
 
 public static class WorkHistoryMapping
 {
@@ -15,13 +15,13 @@ public static class WorkHistoryMapping
     {
         return new WorkHistory()
         {
-            Id = workHistory.Id,
-            Name = workHistory.Name,
-            Current = workHistory.Current,
-            Path = workHistory.Path,
-            Status = workHistory.Status,
-            Total = workHistory.Total,
-            EndDate = workHistory.EndDate,
+            Id        = workHistory.Id,
+            Name      = workHistory.Name,
+            Current   = workHistory.Current,
+            Path      = workHistory.Path,
+            Status    = workHistory.Status,
+            Total     = workHistory.Total,
+            EndDate   = workHistory.EndDate,
             StartDate = workHistory.StartDate
         };
     }
@@ -35,13 +35,13 @@ public static class WorkHistoryMapping
     {
         return new WorkHistoryDto()
         {
-            Id = workHistory.Id,
-            Name = workHistory.Name,
-            Current = workHistory.Current,
-            Path = workHistory.Path,
-            Status = workHistory.Status,
-            Total = workHistory.Total,
-            EndDate = workHistory.EndDate,
+            Id        = workHistory.Id,
+            Name      = workHistory.Name,
+            Current   = workHistory.Current,
+            Path      = workHistory.Path,
+            Status    = workHistory.Status,
+            Total     = workHistory.Total,
+            EndDate   = workHistory.EndDate,
             StartDate = workHistory.StartDate
         };
     }
@@ -55,12 +55,12 @@ public static class WorkHistoryMapping
     {
         return new WorkHistoryVm()
         {
-            Name = workHistory.Name,
-            Current = workHistory.Current,
-            Path = workHistory.Path,
-            Status = workHistory.Status,
-            Total = workHistory.Total,
-            EndDate = workHistory.EndDate,
+            Name      = workHistory.Name,
+            Current   = workHistory.Current,
+            Path      = workHistory.Path,
+            Status    = workHistory.Status,
+            Total     = workHistory.Total,
+            EndDate   = workHistory.EndDate,
             StartDate = workHistory.StartDate
         };
     }

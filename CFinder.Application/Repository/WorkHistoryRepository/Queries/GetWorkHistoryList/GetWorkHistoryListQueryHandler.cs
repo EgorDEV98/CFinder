@@ -1,5 +1,5 @@
-﻿using CFinder.Application.Interfaces;
-using CFinder.Application.Mappings;
+﻿using CFinder.Application.Common.Mappings;
+using CFinder.Application.Interfaces;
 using CFinder.Application.Models.WorkHistory.DTOs;
 using CFinder.Application.Utils.Filters;
 using MediatR;

@@ -8,11 +8,6 @@ namespace CFinder.Application.Models.WorkHistory.VMs;
 public class WorkHistoryVm
 {
     /// <summary>
-    /// Identifier
-    /// </summary>
-    public int Id { get; set; }
-    
-    /// <summary>
     /// Operation name
     /// </summary>
     public string? Name { get; set; }
