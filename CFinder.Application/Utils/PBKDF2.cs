@@ -3,18 +3,21 @@ using System.Text;
 
 namespace CFinder.Application.Utils;
 
-public class PBKDF2
+public static class PBKDF2
 {
     public static byte[] DeriveKey(string? password, byte[] salt)
     {
+        if (password == null)
+        {
+            return Array.Empty<byte>();
+        }
         var passwordBytes = Encoding.UTF8.GetBytes(password);
-        var prf = HMAC.Create("HMACSHA256");
-
+        var prf = new HMACSHA256();
 
         prf.Key = passwordBytes;
         int num1 = prf.HashSize / 8;
-        int num2;
-        int length = (int) Math.Ceiling((double) (num2 = 256 / 8) / (double) num1);
+        int num2 = 32;
+        int length = (int) Math.Ceiling(num2 / (double) num1);
         int num3 = (length - 1) * num1;
         int num4 = num2 - num3;
         byte[][] numArray = new byte[length][];
@@ -36,27 +39,23 @@ public class PBKDF2
         }
         return left;
     }
-    
-    public static class Arrays
+    private static class Arrays
     {
         public static byte[] LeftmostBits(byte[] data, int lengthBits)
         {
             int count = lengthBits / 8;
             byte[] dst = new byte[count];
-            Buffer.BlockCopy((Array) data, 0, (Array) dst, 0, count);
+            Buffer.BlockCopy(data, 0, dst, 0, count);
             return dst;
         }
         public static byte[] Concat(params byte[][] arrays)
         {
-            byte[] dst = new byte[((IEnumerable<byte[]>) arrays).Sum<byte[]>((Func<byte[], int>) (a => a == null ? 0 : a.Length))];
+            byte[] dst = new byte[arrays.Sum((Func<byte[], int>) (a => a.Length))];
             int dstOffset = 0;
             foreach (byte[] array in arrays)
             {
-                if (array != null)
-                {
-                    Buffer.BlockCopy((Array) array, 0, (Array) dst, dstOffset, array.Length);
-                    dstOffset += array.Length;
-                }
+                Buffer.BlockCopy(array, 0, dst, dstOffset, array.Length);
+                dstOffset += array.Length;
             }
             return dst;
         }
@@ -64,25 +63,25 @@ public class PBKDF2
         {
             byte[] numArray = new byte[left.Length];
             for (int index = 0; index < left.Length; ++index)
-                numArray[index] = (byte) ((uint) left[index] ^ (uint) right[index]);
+                numArray[index] = (byte) (left[index] ^ (uint) right[index]);
             return numArray;
         }
     
         public static byte[] IntToBytes(int value)
         {
             uint num = (uint) value;
-            return !BitConverter.IsLittleEndian ? new byte[4]
+            return !BitConverter.IsLittleEndian ? new[]
             {
-                (byte) (num & (uint) byte.MaxValue),
-                (byte) (num >> 8 & (uint) byte.MaxValue),
-                (byte) (num >> 16 & (uint) byte.MaxValue),
-                (byte) (num >> 24 & (uint) byte.MaxValue)
-            } : new byte[4]
+                (byte) (num & byte.MaxValue),
+                (byte) (num >> 8 & byte.MaxValue),
+                (byte) (num >> 16 & byte.MaxValue),
+                (byte) (num >> 24 & byte.MaxValue)
+            } : new[]
             {
-                (byte) (num >> 24 & (uint) byte.MaxValue),
-                (byte) (num >> 16 & (uint) byte.MaxValue),
-                (byte) (num >> 8 & (uint) byte.MaxValue),
-                (byte) (num & (uint) byte.MaxValue)
+                (byte) (num >> 24 & byte.MaxValue),
+                (byte) (num >> 16 & byte.MaxValue),
+                (byte) (num >> 8 & byte.MaxValue),
+                (byte) (num & byte.MaxValue)
             };
         }
     }

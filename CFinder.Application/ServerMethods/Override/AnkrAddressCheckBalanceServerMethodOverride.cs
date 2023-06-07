@@ -1,8 +1,11 @@
 ﻿using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using CFinder.Application.Models.AddressCheckerModels;
 using CFinder.Application.Models.Result;
+using CFinder.Application.Models.Settings;
 using CFinder.Application.ServerMethods.Base;
+using CFinder.Domain.Settings;
 
 namespace CFinder.Application.ServerMethods.Override;
 
@@ -10,13 +13,48 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
 {
     private const string ENDPOINT = "https://rpc.ankr.com/multichain/";
     private const string AUTH_KEY = "2bd798e6459d20a3b5b034b93a72f6a21d7a960279a1138e8477ec6fb2fce9f0";
-    
-    public override async Task<List<TokenDto>> CheckToken(string address, bool onlyWhiteListed = true)
+
+    /// <summary>
+    /// All check
+    /// </summary>
+    /// <param name="address">address ethereum (0x...)</param>
+    /// <param name="checkerSettingsDto">BalanceCheckerSettingsDto obj</param>
+    /// <returns>TupleBalances obj</returns>
+    public override async Task<TupleBalances> CheckAll(string? address, BalanceCheckerSettingsDto checkerSettingsDto)
     {
-        var requestString =
-            $"{{\"id\":1,\"jsonrpc\":\"2.0\",\"method\":\"ankr_getAccountBalance\",\"params\":{{\"nativeFirst\":true,\"onlyWhitelisted\":{onlyWhiteListed.ToString().ToLower()},\"walletAddress\":\"{address}\"}}}}";
+        var checkType = checkerSettingsDto.CheckCrypto;
+        var balancesTyple = new TupleBalances();
+        if (string.IsNullOrWhiteSpace(address))
+            return balancesTyple;
         
-        var stringContent = new StringContent(requestString, Encoding.UTF8, "application/json");
+
+        if (checkType == CheckCryptoMode.AllCheck || checkType == CheckCryptoMode.CheckOnlyTokens)
+        {
+            balancesTyple.Tokens = await CheckToken(address, checkerSettingsDto.OnlyWhiteList);
+
+            await Task.Delay(checkerSettingsDto.DelayBeforeRequest);
+        }
+
+        if (checkType == CheckCryptoMode.AllCheck || checkType == CheckCryptoMode.CheckOnlyNfts)
+        {
+            balancesTyple.NFTs = await CheckNFT(address);
+            
+            await Task.Delay(checkerSettingsDto.DelayBeforeRequest);
+        }
+
+        return balancesTyple;
+    }
+
+    /// <summary>
+    /// Check address token
+    /// </summary>
+    /// <param name="address">address ethereum (0x...)</param>
+    /// <param name="onlyWhiteListed">only those authorized CoinGeco tokens</param>
+    /// <returns>ListTokenDto or null</returns>
+    public override async Task<ICollection<TokenDto>?> CheckToken(string address, bool onlyWhiteListed = true)
+    {
+        var requestToken = new TokenRequest(address, onlyWhiteListed);
+        var stringContent = requestToken.GetStringContent();
         
         using (var client = new HttpClient())
         {
@@ -36,18 +74,23 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
                     TokenName = x.TokenName,
                     Type = x.TokenType
                 })
-                    .ToList() ?? new List<TokenDto>();
+                    .ToList() ?? null;
             }
         }
 
-        return new List<TokenDto>();
+        return null;
     }
 
-    public override async Task<List<NFTDto>> CheckNFT(string address)
+    /// <summary>
+    /// Check address NFT
+    /// </summary>
+    /// <param name="address">address ethereum (0x...)</param>
+    /// <returns>ListNFTDto or null</returns>
+    public override async Task<ICollection<NFTDto>?> CheckNFT(string address)
     {
-        var requestString = $"{{\"id\":1,\"jsonrpc\":\"2.0\",\"method\":\"ankr_getNFTsByOwner\",\"params\":{{\"walletAddress\":\"{address}\",\"pageSize\":50 }}}}";
-        var stringContent = new StringContent(requestString, Encoding.UTF8, "application/json");
-        
+        var request = new NFTRequest(address);
+        var stringContent = request.GetStringContent();
+
         using (var client = new HttpClient())
         {
             var response = await client.PostAsync(ENDPOINT + AUTH_KEY, stringContent);
@@ -71,6 +114,90 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
 
         return new List<NFTDto>();
     }
+    
+
+    #region AnkrRequest Classes
+
+    private class BaseRequest
+    {
+        [JsonInclude] 
+        [JsonPropertyName("id")] 
+        public int Id { get; private set; } = 1;
+
+        [JsonInclude]
+        [JsonPropertyName("jsonrpc")]
+        public string JsonRPC { get; private set; } = "2.0";
+        
+        [JsonPropertyName("method")]
+        public virtual string Method { get; }
+        
+        [JsonPropertyName("pageSize")]
+        public virtual int PageSize { get; }
+    }
+    private sealed class NFTRequest : BaseRequest
+    {
+        public NFTRequest(string address)
+        {
+            Params.Address = address;
+        }
+        
+        [JsonPropertyName("params")] 
+        public NFTParams Params { get; } = new();
+
+        [JsonPropertyName("method")] 
+        public override string Method => "ankr_getNFTsByOwner";
+
+        [JsonPropertyName("pageSize")] 
+        public override int PageSize => 50;
+        public StringContent GetStringContent()
+        {
+            var serialize = JsonSerializer.Serialize(this);
+            return new StringContent(serialize, Encoding.UTF8, "application/json");
+        }
+    }
+    private sealed class TokenRequest : BaseRequest
+    {
+        public TokenRequest(string address, bool onlyWhiteList)
+        {
+            Params.Address = address;
+            Params.OnlyWhiteList = onlyWhiteList;
+        }
+
+        [JsonPropertyName("method")] public override string Method => "ankr_getAccountBalance";
+        [JsonPropertyName("params")] public TokenParams Params { get; } = new();
+
+        [JsonIgnore] 
+        public override int PageSize { get; } = 50;
+
+        public StringContent GetStringContent()
+        {
+            var serialize = JsonSerializer.Serialize(this);
+            return new StringContent(serialize, Encoding.UTF8, "application/json");
+        }
+    }
+    private sealed class TokenParams
+    {
+        [JsonPropertyName("walletAddress")]
+        public string Address { get; set; }
+
+        [JsonPropertyName("nativeFirst")] 
+        public bool NativeFirst { get; set; } = true;
+
+        [JsonPropertyName("onlyWhitelisted")]
+        public bool OnlyWhiteList { get; set; }
+    }
+    private sealed class NFTParams
+    {
+        [JsonPropertyName("walletAddress")]
+        public string Address { get; set; }
+    
+        [JsonPropertyName("pageSize")]
+        public int PageSize { get; set; }
+    }
+
+    #endregion
+    
+    #region AnkRequest Classes
 
     private interface IJsonResponse
     {
@@ -79,7 +206,7 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
         [JsonPropertyName("jsonrpc")]
         public string JsonRPC { get;  }
     }
-    private class TokenResponse : IJsonResponse
+    private sealed class TokenResponse : IJsonResponse
     {
         [JsonPropertyName("id")]
         public int Id { get;}
@@ -88,7 +215,7 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
         [JsonPropertyName("result")]
         public TokenResult? Result { get; set; }
     }
-    private class NFTResponse : IJsonResponse
+    private sealed class NFTResponse : IJsonResponse
     {
         [JsonPropertyName("id")]
         public int Id { get;}
@@ -97,8 +224,7 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
         [JsonPropertyName("result")]
         public NFTResult Result { get; set; }
     }
-    
-    private class NFTResult
+    private sealed class NFTResult
     {
         [JsonPropertyName("owner")]
         public string? Owner { get; set; }
@@ -107,7 +233,7 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
         [JsonPropertyName("nextPageToken")]
         public string? NextPageToken { get; set; }
     }
-    private class TokenResult
+    private sealed class TokenResult
     {
         [JsonPropertyName("totalBalanceUsd")]
         public string totalBalanceUsd { get; set; }
@@ -116,8 +242,7 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
         [JsonPropertyName("assets")]
         public List<AssetToken> Assets { get; set; }
     }
-    
-    private class AssetNFT
+    private sealed class AssetNFT
     {
         [JsonPropertyName("blockchain")]
         public string? Blockchain { get; set; }
@@ -138,7 +263,7 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
         [JsonPropertyName("contractAddress")]
         public string? ContractAddress { get; set; }
     }
-    private class AssetToken
+    private sealed class AssetToken
     {
         [JsonPropertyName("blockchain")]
         public string? Blockchain { get; set; }
@@ -165,4 +290,6 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
         [JsonPropertyName("thumbnail")]
         public string? Thumbnail { get; set; }
     }
+
+    #endregion
 }

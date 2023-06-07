@@ -140,24 +140,14 @@ public class CryptoFinderService : BaseService
                                 .ToList();
                         }
 
-                        var checkCryptoType = SettingsDto.BalanceCheckerSettings.CheckCrypto;
                         foreach (var walletInfoDto in wallet.Addresses)
                         {
-                            if (checkCryptoType == CheckCryptoMode.AllCheck ||
-                                checkCryptoType == CheckCryptoMode.CheckOnlyTokens)
-                            {
-                                walletInfoDto.Tokens =
-                                    await _balanceServerMethodOverride.CheckToken(walletInfoDto.Address,
-                                        SettingsDto.BalanceCheckerSettings.OnlyWhiteList);
-                                await Task.Delay(SettingsDto.BalanceCheckerSettings.DelayBeforeRequest);
-                            }
+                            var checkResult = await _balanceServerMethodOverride.CheckAll(
+                                walletInfoDto?.Address,
+                                SettingsDto.BalanceCheckerSettings);
 
-                            if (checkCryptoType == CheckCryptoMode.AllCheck ||
-                                checkCryptoType == CheckCryptoMode.CheckOnlyNfts)
-                            {
-                                walletInfoDto.Nfts = await _balanceServerMethodOverride.CheckNFT(walletInfoDto.Address);
-                                await Task.Delay(SettingsDto.BalanceCheckerSettings.DelayBeforeRequest);
-                            }
+                            walletInfoDto.Nfts = checkResult.NFTs;
+                            walletInfoDto.Tokens = checkResult.Tokens;
                         }
 
                         if ((SettingsDto.DecryptorSettings.DecryptSaveAs == DecryptSaveAs.SaveAlways ||

@@ -1,5 +1,4 @@
-﻿using CFinder.Domain.WorkHistory;
-using MediatR;
+﻿using MediatR;
 
 namespace CFinder.Application.Repository.WorkHistoryRepository.Commands.TruncateWorkHistory;
 

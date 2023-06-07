@@ -10,10 +10,10 @@ namespace CFinder.Persistence;
 
 public sealed class DataStore : DbContext, IDataStore
 {
-    public DbSet<Settings>? Settings { get; set; }
-    public DbSet<WorkHistory>? History { get; set; }
-    public DbSet<Log>? Logs { get; set; }
-    public DbSet<CleanerPattern>? CleanerPatterns { get; set; }
+    public DbSet<Settings> Settings { get; set; }
+    public DbSet<WorkHistory> History { get; set; }
+    public DbSet<Log> Logs { get; set; }
+    public DbSet<CleanerPattern> CleanerPatterns { get; set; }
     public DatabaseFacade DatabaseFacade { get; set; }
     
 
