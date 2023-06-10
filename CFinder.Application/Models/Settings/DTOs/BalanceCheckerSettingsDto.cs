@@ -10,7 +10,7 @@ public class BalanceCheckerSettingsDto
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
     
     /// <summary>
     /// Check crypto mode

@@ -15,9 +15,7 @@ public class LogsCleanerService : BaseService
     
     public LogsCleanerService(IServiceProvider serviceProvider) : 
         base(serviceProvider)
-    {
-        
-    }
+    { }
 
     public async Task StartAsync(string path)
     {
@@ -39,8 +37,7 @@ public class LogsCleanerService : BaseService
         {
             return;
         }
-
-
+        
         try
         {
             var command = new CreateWorkHistoryCommand()

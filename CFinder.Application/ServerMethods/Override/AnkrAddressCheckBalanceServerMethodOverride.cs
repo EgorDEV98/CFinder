@@ -15,12 +15,28 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
     private const string AUTH_KEY = "2bd798e6459d20a3b5b034b93a72f6a21d7a960279a1138e8477ec6fb2fce9f0";
 
     /// <summary>
+    /// Check AddressInfoDto Addresses
+    /// </summary>
+    /// <param name="addressInfoDtos">IEnumerable AddressInfoDto obj</param>
+    /// <param name="checkerSettingsDto">BalanceCheckerSettingsDto obj</param>
+    public async Task CheckAllAddresses(IEnumerable<AddressInfoDto> addressInfoDtos, BalanceCheckerSettingsDto checkerSettingsDto)
+    {
+        foreach (var addressInfoDto in addressInfoDtos)
+        {
+            var checkReuslt = await CheckTokenNFT(addressInfoDto.Address, checkerSettingsDto);
+
+            addressInfoDto.Tokens = checkReuslt.Tokens;
+            addressInfoDto.Nfts = checkReuslt.NFTs;
+        }
+    }
+
+    /// <summary>
     /// All check
     /// </summary>
     /// <param name="address">address ethereum (0x...)</param>
     /// <param name="checkerSettingsDto">BalanceCheckerSettingsDto obj</param>
     /// <returns>TupleBalances obj</returns>
-    public override async Task<TupleBalances> CheckAll(string? address, BalanceCheckerSettingsDto checkerSettingsDto)
+    public override async Task<TupleBalances> CheckTokenNFT(string? address, BalanceCheckerSettingsDto checkerSettingsDto)
     {
         var checkType = checkerSettingsDto.CheckCrypto;
         var balancesTyple = new TupleBalances();
@@ -211,7 +227,7 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
         [JsonPropertyName("id")]
         public int Id { get;}
         [JsonPropertyName("jsonrpc")]
-        public string? JsonRPC { get; }
+        public string JsonRPC { get; }
         [JsonPropertyName("result")]
         public TokenResult? Result { get; set; }
     }
@@ -220,7 +236,7 @@ public class AnkrAddressCheckBalanceServerMethodOverride : AddressCheckBalanceSe
         [JsonPropertyName("id")]
         public int Id { get;}
         [JsonPropertyName("jsonrpc")]
-        public string? JsonRPC { get; }
+        public string JsonRPC { get; }
         [JsonPropertyName("result")]
         public NFTResult Result { get; set; }
     }

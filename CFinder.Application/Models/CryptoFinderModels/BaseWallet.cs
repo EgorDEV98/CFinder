@@ -19,6 +19,13 @@ public abstract class BaseWallet
     }
     public abstract Task<string> GetEncrypted(DecryptorSettingsDto settings);
     public abstract Task<string> GetHashcat(string json);
-    public abstract Task<(string decrypted, string password, string mnemonic)> Decrypt(string walletEncrypted,
+    public abstract Task<DecryptResult?> Decrypt(string walletEncrypted,
         string?[] passwordList);
+    
+    public class DecryptResult
+    {
+        public string? Decrypted { get; set; }
+        public string? Password { get; set; }
+        public string? Mnemonic { get; set; }
+    }
 }

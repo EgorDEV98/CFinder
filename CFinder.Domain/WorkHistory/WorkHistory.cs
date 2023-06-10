@@ -10,7 +10,7 @@ public class WorkHistory
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
     
     /// <summary>
     /// Operation name

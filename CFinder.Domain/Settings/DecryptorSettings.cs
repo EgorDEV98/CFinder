@@ -7,7 +7,7 @@ public class DecryptorSettings
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
     
     /// <summary>
     /// Try decrypt
@@ -35,7 +35,7 @@ public class DecryptorSettings
     public int CycleItterationCount { get; set; }
     
     public Settings Settings { get; set; }
-    public int SettingsId { get; set; }
+    public long SettingsId { get; set; }
 
     /// <summary>
     /// Get default settings

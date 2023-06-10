@@ -12,7 +12,7 @@ public abstract class AddressCheckBalanceServerMethod
     /// <param name="address">address</param>
     /// <param name="checkerSettingsDto">BalanceCheckerSettingsDto obj</param>
     /// <returns>TupleBalances obj</returns>
-    public abstract Task<TupleBalances> CheckAll(string address, BalanceCheckerSettingsDto checkerSettingsDto);
+    public abstract Task<TupleBalances> CheckTokenNFT(string address, BalanceCheckerSettingsDto checkerSettingsDto);
 
     /// <summary>
     /// Check address token

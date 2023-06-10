@@ -6,7 +6,7 @@ public class NFT
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; init; }
+    public long Id { get; init; }
     
     /// <summary>
     /// Blockchain node

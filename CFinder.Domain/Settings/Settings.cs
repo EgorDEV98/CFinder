@@ -5,7 +5,7 @@ public class Settings
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     /// <summary>
     /// Profile name

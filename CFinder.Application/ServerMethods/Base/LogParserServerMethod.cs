@@ -1,5 +1,6 @@
 ﻿using CFinder.Application.Models.CryptoFinderModels;
 using CFinder.Application.Models.Result;
+using CFinder.Application.Models.Settings;
 using CFinder.Domain.Log;
 using CFinder.Domain.Settings;
 
@@ -7,11 +8,51 @@ namespace CFinder.Application.ServerMethods.Base;
 
 public class LogParserServerMethod
 {
+    private static readonly string[] URL_STRINGS = {
+        "url", "link", "host"
+    };
+
+    private static readonly string[] LOGIN_STRINGS = {
+        "user", "login"
+    };
+    
+    private static readonly string[] APPLICATION_STRINGS = {
+        "soft", "app"
+    };
+    
+    private static readonly string[] PASSWORD_STRINGS = {
+        "pass"
+    };
+
+    
+    public virtual async Task<LogDto> FullParseLog(string path, ParserSettingsDto parserSettings)
+    {
+        return new LogDto()
+        {
+            Directory = path,
+            Files = await GetFiles(path),
+            Authentications = await GetAuthentication(path, parserSettings.ParsingType),
+            Wallets = new List<WalletDto>()
+        };
+    }
     
     /// <summary>
-    /// Искать в папке с логом файл Password.txt и распарсить его
+    /// Get all files in Log
     /// </summary>
-    /// <param name="directory">Папка с логом</param>
+    /// <param name="directory">Log Directory</param>
+    /// <returns></returns>
+    public virtual async Task<string[]> GetFiles(string directory)
+    {
+        await Task.CompletedTask;
+        return Directory
+            .GetFiles(directory, "*", SearchOption.AllDirectories)
+            .ToArray();
+    }
+    /// <summary>
+    /// Search for the Password.txt file in the log folder and parse it
+    /// </summary>
+    /// <param name="directory">Log directory</param>
+    /// <param name="parsingType">Parsing of the type</param>
     /// <returns>List AuthenticationDto</returns>
     public virtual async Task<List<AuthenticationDto>> GetAuthentication(string directory, AuthParsingType parsingType = AuthParsingType.FullParsing)
     {
@@ -36,7 +77,7 @@ public class LogParserServerMethod
     /// </summary>
     /// <param name="directory">Папка с логом</param>
     /// <returns></returns>
-    public virtual async Task<List<BaseWallet>> GetWalelts(string directory)
+    public virtual async Task<ICollection<BaseWallet>> GetWalelts(string directory)
     {
         var walletList = new List<BaseWallet>();
         var walletDirectory = GetWalletDirectory(directory);
@@ -45,7 +86,7 @@ public class LogParserServerMethod
             return walletList;
         }
         
-        var walletsDirectories = System.IO.Directory.GetDirectories(walletDirectory);
+        var walletsDirectories = Directory.GetDirectories(walletDirectory);
         var walletNames = Enum.GetNames<Wallet.WalletType>();
         
         foreach (var walletsDirectory in walletsDirectories)
@@ -70,11 +111,6 @@ public class LogParserServerMethod
         return walletList;
     }
     
-    
-    
-    
-    
-    
     /// <summary>
     /// Парсить файл с паролем
     /// </summary>
@@ -98,33 +134,27 @@ public class LogParserServerMethod
                         break;
 
                     var parts = line.Split(new[] { ':' }, 2);
-
                     if (parts.Length != 2)
                         continue;
 
                     var startString = parts[0].Trim();
                     var endString = parts[1].Trim();
 
-                    if (startString.Contains("pass", StringComparison.OrdinalIgnoreCase))
+                    if (CheckContainsSubword(PASSWORD_STRINGS, startString))
                     {
                         auth.Password = endString;
                     }
-                    else if ((startString.Contains("url", StringComparison.OrdinalIgnoreCase) ||
-                             startString.Contains("link", StringComparison.OrdinalIgnoreCase) ||
-                             startString.Contains("host", StringComparison.OrdinalIgnoreCase)) &&
-                             parsingType == AuthParsingType.FullParsing)
+                    else if(CheckContainsSubword(URL_STRINGS, startString) && 
+                            parsingType == AuthParsingType.FullParsing)
                     {
                         auth.Link = endString;
                     }
-                    else if ((startString.Contains("user", StringComparison.OrdinalIgnoreCase) ||
-                             startString.Contains("login", StringComparison.OrdinalIgnoreCase)) &&
+                    else if (CheckContainsSubword(LOGIN_STRINGS, startString) &&
                              (parsingType == AuthParsingType.FullParsing || parsingType == AuthParsingType.LoginAndPassword))
                     {
                         auth.Login = endString;
                     }
-                    else if ((startString.Contains("app", StringComparison.OrdinalIgnoreCase) ||
-                             startString.Contains("soft", StringComparison.OrdinalIgnoreCase)) &&
-                            parsingType == AuthParsingType.FullParsing)
+                    else if (CheckContainsSubword(APPLICATION_STRINGS, startString) && parsingType == AuthParsingType.FullParsing)
                     {
                         auth.Application = endString;
                     }
@@ -135,6 +165,11 @@ public class LogParserServerMethod
         }
 
         return authsList;
+    }
+
+    private bool CheckContainsSubword(string[] array, string startString)
+    {
+        return array.Any(x => startString.Contains(x, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

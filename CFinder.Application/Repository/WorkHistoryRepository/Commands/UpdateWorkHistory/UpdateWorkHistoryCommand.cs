@@ -11,7 +11,7 @@ public class UpdateWorkHistoryCommand : IRequest<WorkHistory>
     /// <summary>
     /// Идентификатор
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
     
     /// <summary>
     /// Окончание работы операции

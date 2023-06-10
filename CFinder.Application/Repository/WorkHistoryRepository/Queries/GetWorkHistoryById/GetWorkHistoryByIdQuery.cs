@@ -11,5 +11,5 @@ public class GetWorkHistoryByIdQuery : IRequest<WorkHistoryDto>
     /// <summary>
     /// Идентификатор
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
 }

@@ -22,4 +22,9 @@ public class CreateWorkHistoryCommand : IRequest<WorkHistoryDto>
     /// Предполагаемое количество иттераций
     /// </summary>
     public long? Total { get; set; }
+    
+    /// <summary>
+    /// Дата и время начала работы сервиса
+    /// </summary>
+    public DateTime? StartDate { get; set; }
 }

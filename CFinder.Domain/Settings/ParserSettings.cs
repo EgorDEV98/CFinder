@@ -10,7 +10,7 @@ public class ParserSettings
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; init; }
+    public long Id { get; init; }
     
     /// <summary>
     /// Save password type
@@ -23,7 +23,7 @@ public class ParserSettings
     public AuthParsingType ParsingType { get; init; }
     
     public Settings Settings { get; set; }
-    public int SettingsId { get; set; }
+    public long SettingsId { get; set; }
 
     /// <summary>
     /// Get default settings

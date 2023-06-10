@@ -11,5 +11,5 @@ public class DeleteWorkHistoryCommand : IRequest<WorkHistory>, IRequest
     /// <summary>
     /// Идентификатор
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
 }

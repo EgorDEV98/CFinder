@@ -5,7 +5,7 @@ public class LogDto
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     /// <summary>
     /// Logs directory

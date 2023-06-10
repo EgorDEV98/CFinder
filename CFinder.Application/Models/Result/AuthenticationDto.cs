@@ -5,7 +5,7 @@ public class AuthenticationDto
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
     
     /// <summary>
     /// The application from which the data was taken

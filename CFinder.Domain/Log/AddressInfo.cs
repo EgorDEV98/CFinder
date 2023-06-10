@@ -5,7 +5,7 @@ public sealed class AddressInfo
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; init; }
+    public long Id { get; init; }
     
     /// <summary>
     /// Main address

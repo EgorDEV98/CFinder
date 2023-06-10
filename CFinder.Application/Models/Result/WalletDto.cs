@@ -7,7 +7,7 @@ public class WalletDto
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; init; }
+    public long Id { get; init; }
     
     /// <summary>
     /// Wallet directory

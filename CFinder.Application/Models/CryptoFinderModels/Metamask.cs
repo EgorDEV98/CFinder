@@ -63,7 +63,6 @@ public class Metamask : BaseWallet
     }
     public override async Task<string[]> GetOriginalAddresses()
     {
-        await Task.CompletedTask;
         if (!System.IO.Directory.Exists(base.Directory))
             return Array.Empty<string>();
         
@@ -89,13 +88,13 @@ public class Metamask : BaseWallet
         return Array.Empty<string>();
         
     }
-    public override async Task<(string decrypted, string password, string mnemonic)> Decrypt(string encryptedJson,
+    public override async Task<DecryptResult?> Decrypt(string encryptedJson,
         string?[] passwordList)
     {
         await Task.CompletedTask;
         if (string.IsNullOrWhiteSpace(encryptedJson) || passwordList.Length == 0)
         {
-            return (string.Empty, string.Empty, string.Empty);
+            return null;
         }
         
         var parsedDocument = JsonDocument.Parse(encryptedJson).RootElement;
@@ -109,9 +108,7 @@ public class Metamask : BaseWallet
         salt = Convert.FromBase64String(saltString);
         data = Convert.FromBase64String(dataString);
 
-        string decrypted = string.Empty;
-        string validPassword = string.Empty;
-        string? newMnemonic = "";
+        var decrypted = new DecryptResult();
         
         Parallel.ForEach(passwordList, (password, state) =>
         {
@@ -124,9 +121,9 @@ public class Metamask : BaseWallet
                 byte[] plainBytes = new byte[gcmBlockCipher.GetOutputSize(data.Length)];
                 int retLen = gcmBlockCipher.ProcessBytes(data, 0, data.Length, plainBytes, 0);
                 gcmBlockCipher.DoFinal(plainBytes, retLen);
-                
-                decrypted = Encoding.UTF8.GetString(plainBytes);
-                validPassword = password;
+
+                decrypted.Decrypted = Encoding.UTF8.GetString(plainBytes);
+                decrypted.Password = password;
                 
                 state.Stop();
             }
@@ -136,10 +133,10 @@ public class Metamask : BaseWallet
             }
         });
         
-        if(string.IsNullOrWhiteSpace(decrypted))
-            return (string.Empty, string.Empty, string.Empty);
+        if(string.IsNullOrWhiteSpace(decrypted.Decrypted))
+            return null;
         
-        var parsedDecrypted = JsonDocument.Parse(decrypted).RootElement;
+        var parsedDecrypted = JsonDocument.Parse(decrypted.Decrypted).RootElement;
         var mnemonicElement = JsonSearcher.Search(parsedDecrypted, "mnemonic");
         
         if (mnemonicElement.ValueKind == JsonValueKind.Array)
@@ -147,13 +144,13 @@ public class Metamask : BaseWallet
             var byteArray = mnemonicElement.EnumerateArray()
                 .Select(x => (byte)x.GetInt32())
                 .ToArray();
-            newMnemonic = Encoding.UTF8.GetString(byteArray);
+            decrypted.Mnemonic = Encoding.UTF8.GetString(byteArray);
         }
         else if(mnemonicElement.ValueKind == JsonValueKind.String)
         {
-            newMnemonic = mnemonicElement.GetString();
+            decrypted.Mnemonic = mnemonicElement.GetString();
         }
 
-        return (decrypted, validPassword, newMnemonic);
+        return decrypted;
     }
 }

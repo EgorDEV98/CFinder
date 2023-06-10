@@ -10,7 +10,7 @@ public class BalanceCheckerSettings
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
     
     /// <summary>
     /// Check crypto mode
@@ -28,7 +28,7 @@ public class BalanceCheckerSettings
     public short DelayBeforeRequest { get; set; }
     
     public Settings Settings { get; set; }
-    public int SettingsId { get; set; }
+    public long SettingsId { get; set; }
 
     /// <summary>
     /// GetDefault settings

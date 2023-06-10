@@ -6,7 +6,7 @@ public class CleanerPattern
     /// <summary>
     /// Identifier
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
     
     /// <summary>
     /// File format ( .exe | .bin | etc...)

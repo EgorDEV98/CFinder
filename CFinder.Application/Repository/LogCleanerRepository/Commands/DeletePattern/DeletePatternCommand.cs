@@ -4,5 +4,5 @@ namespace CFinder.Application.Repository.LogCleanerRepository.Commands.DeletePat
 
 public class DeletePatternCommand : IRequest
 {
-    public int Id { get; init; }
+    public long Id { get; init; }
 }
