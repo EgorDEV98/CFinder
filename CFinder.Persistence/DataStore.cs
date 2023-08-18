@@ -23,6 +23,7 @@ public sealed class DataStore : DbContext, IDataStore
         : base(options)
     {
         this.Database.ExecuteSqlRaw(pragmas);
+        DatabaseFacade = this.Database;
     }
 
     public DataStore(DbContextOptions<DataStore> options)

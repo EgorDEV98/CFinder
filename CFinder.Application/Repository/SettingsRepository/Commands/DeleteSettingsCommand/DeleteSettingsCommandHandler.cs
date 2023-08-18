@@ -27,7 +27,9 @@ internal class DeleteSettingsCommandHandler : IRequestHandler<DeleteSettingsComm
             throw new NotFoundException(nameof(Settings), request.Id);
         }
         
-        var anyEntity = await _dataStore.Settings.FirstOrDefaultAsync();
+        var anyEntity = await _dataStore.Settings
+            .Where(x => x.Id != request.Id)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
         if (anyEntity != null)
         {
             anyEntity.IsActive = true;

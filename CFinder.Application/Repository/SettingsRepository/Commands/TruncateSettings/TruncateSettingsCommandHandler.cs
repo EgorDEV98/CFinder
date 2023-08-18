@@ -18,9 +18,7 @@ internal class TruncateSettingsCommandHandler : IRequestHandler<TruncateSettings
     
     public async Task Handle(TruncateSettingsCommand request, CancellationToken cancellationToken)
     {
-        string truncatingTableName = nameof(_dataStore.Settings);
-        
-        await _dataStore.DatabaseFacade.ExecuteSqlRawAsync($"DELETE FROM {truncatingTableName}; DELETE FROM sqlite_sequence WHERE name = \'{truncatingTableName}\';", cancellationToken);
+        await _dataStore.DatabaseFacade.ExecuteSqlRawAsync($"DELETE FROM Settings; DELETE FROM sqlite_sequence WHERE name = \'Settings\';", cancellationToken);
         await _dataStore.SaveChangesAsync(cancellationToken);
     }
 }
